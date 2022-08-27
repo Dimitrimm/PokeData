@@ -8,7 +8,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:telas/Loading/loading.dart';
+import 'package:telas/loading.dart';
 
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {

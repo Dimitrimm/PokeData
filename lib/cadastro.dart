@@ -1,23 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:telas/Cadastro/cadastro.dart';
-import 'package:telas/Principal/main.dart';
+import 'package:telas/login.dart';
 
 void main() {
-  runApp(const Login());
+  runApp(const Cadastro());
 }
 
-class Login extends StatefulWidget {
-  const Login({Key? key}) : super(key: key);
+class Cadastro extends StatelessWidget {
+  const Cadastro({Key? key}) : super(key: key);
 
-  @override
-  State<Login> createState() => _MyAppState();
-}
-
-class _MyAppState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Loading',
+      title: 'Cadastro',
       home: Builder(
         builder: (context) => Scaffold(
           body: Container(
@@ -40,12 +34,30 @@ class _MyAppState extends State<Login> {
                     height: 154,
                     child: Image.asset('images/pokebola.png'),
                   ),
+                  const SizedBox(height: 20),
+                  Center(
+                      child: Text('Registro', style: TextStyle(fontSize: 24))),
                   const SizedBox(height: 30),
                   TextFormField(
                     autofocus: true,
                     keyboardType: TextInputType.emailAddress,
                     decoration: const InputDecoration(
-                        labelText: "Email/Usuario",
+                        labelText: "Usuario",
+                        labelStyle: TextStyle(
+                          color: Colors.black38,
+                          fontWeight: FontWeight.w400,
+                          fontSize: 16,
+                        )),
+                    style: const TextStyle(fontSize: 16),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  TextFormField(
+                    autofocus: true,
+                    keyboardType: TextInputType.emailAddress,
+                    decoration: const InputDecoration(
+                        labelText: "Email",
                         labelStyle: TextStyle(
                           color: Colors.black38,
                           fontWeight: FontWeight.w400,
@@ -69,62 +81,34 @@ class _MyAppState extends State<Login> {
                     style: const TextStyle(fontSize: 16),
                   ),
                   const SizedBox(height: 30),
-                  Column(children: [
-                    Container(
-                      height: 40,
-                      width: 100,
-                      // alignment: Alignment.center,
-                      decoration: const BoxDecoration(
-                        color: Colors.red,
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(10),
-                        ),
-                      ),
-                      child: SizedBox.expand(
-                        child: TextButton(
-                          onPressed: (() => Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => Cadastro()))),
-                          child: const Text(
-                            'Sign in',
-                            style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white),
+                  Column(
+                    children: [
+                      Container(
+                        height: 40,
+                        width: 100,
+                        // alignment: Alignment.center,
+                        decoration: const BoxDecoration(
+                          color: Colors.red,
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(20),
                           ),
                         ),
-                      ),
-                    ),
-                    SizedBox(height: 10),
-                    Center(
-                      child: Text("Or", style: TextStyle(fontSize: 16)),
-                    ),
-                    const SizedBox(height: 10),
-                    Container(
-                      width: 100,
-                      height: 40,
-                      decoration: const BoxDecoration(
-                          color: Colors.red,
-                          borderRadius: BorderRadius.all(Radius.circular(10))),
-                      alignment: Alignment.center,
-                      child: SizedBox.expand(
-                        child: TextButton(
-                            onPressed: (() => Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => Main()))),
-                        
+                        child: SizedBox.expand(
+                          child: TextButton(
+                            onPressed: (() => Navigator.push(context, MaterialPageRoute(builder: (context) => Login()))),
                             child: Text(
                               'Sign up',
                               style: TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,
                                   color: Colors.white),
-                            )),
+                            ),
+                          ),
+                        ),
                       ),
-                    ),
-                  ]),
+                    ],
+                  ),
+                  const SizedBox(height: 10),
                 ],
               )),
         ),

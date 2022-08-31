@@ -10,18 +10,18 @@ var pokemons = [
     'pokedexNumber': '6',
   },
   {
-    'name': 'Bubassalto',
+    'name': 'Bulbassauro',
     'type': 'Terra',
     'pokedexNumber': '1',
   },
   {
-    'name': 'Chama André',
+    'name': 'Charmander',
     'type': 'Fogo',
     'pokedexNumber': '4',
   },
   {
-    'name': 'MewTchutchuco',
-    'type': 'Brabo',
+    'name': 'MewTwo',
+    'type': 'Psiquico',
     'pokedexNumber': '150',
   },
 ];

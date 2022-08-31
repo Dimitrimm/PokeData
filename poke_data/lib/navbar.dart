@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import './principal.dart';
+import 'main.dart';
 
 class Navbar extends StatefulWidget {
   const Navbar({Key? key}) : super(key: key);
@@ -12,6 +12,12 @@ class Navbar extends StatefulWidget {
 
 class _NavbarState extends State<Navbar> {
 
+  final List<Widget> telas = [
+    const Pesquisa(),
+    const Principal(),
+    const Versus()
+  ];
+  
   @override
   Widget build(BuildContext context) {
 
@@ -36,7 +42,7 @@ class _NavbarState extends State<Navbar> {
             ),
             BottomNavigationBarItem(
               icon: Image.asset(
-                'images/pokebola.png',
+                'assets/images/pokebola.png',
                 width: 48,
                 height: 48,
               ),
@@ -44,7 +50,7 @@ class _NavbarState extends State<Navbar> {
             ),
             BottomNavigationBarItem(
               icon: Image.asset(
-                'images/versus.png',
+                'assets/images/luta.png',
                 width: 48,
                 height: 48,
               ),

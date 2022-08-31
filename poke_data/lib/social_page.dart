@@ -83,7 +83,8 @@ class _UserFollowsState extends State<UserFollows> {
 
   _tabBar() {
     return Row(
-      // mainAxisAlignment: MainAxisAlignment.start,
+    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    children: [ Row(
       children: <Widget>[
         GestureDetector(
           onTap: () => _selectTabItem("Following"),
@@ -110,15 +111,20 @@ class _UserFollowsState extends State<UserFollows> {
                     : FontWeight.normal)),
           ),
         ),
-      // IconButton(
-      //     onPressed: _selectTabItem("Followers"),
-      //     icon: const Icon(
-      //     Icons.add,
-      //     size: 18.0,
-      //   ))
       ],
+    ),
+      IconButton(
+        onPressed: _followTrainer(),
+        icon: const Icon(
+        Icons.add,
+        size: 30.0, 
+        ))
+        ],
     );
+    
   }
+
+
 
   _selectTabItem(String tabName) {
     if (tabName != currentTab) {
@@ -132,6 +138,10 @@ class _UserFollowsState extends State<UserFollows> {
         );
       }
     }
+  }
+
+  _followTrainer() {
+    
   }
 
   _followingListView() {

@@ -51,7 +51,7 @@ class Principal extends StatelessWidget {
                     onPressed: null,
                     child: SizedBox(
                         child: Image.asset(
-                      'images/engrenagem.png',
+                      'assets/images/engrenagem.png',
                       width: 32,
                       height: 32,
                     )),
@@ -62,7 +62,7 @@ class Principal extends StatelessWidget {
               SizedBox(
                 width: 88,
                 height: 88,
-                child: Image.asset('images/usuario.png'),
+                child: Image.asset('assets/images/jogador.png'),
               ),
               const SizedBox(
                 height: 8,
@@ -83,7 +83,7 @@ class Principal extends StatelessWidget {
                       children: [
                         Card(
                           shadowColor: Colors.blue,
-                          child: Image.asset('images/pokedex.png'),
+                          child: Image.asset('assets/images/pokedex.png'),
                         ),
                         const SizedBox(
                           child: Text('Pokedex'),
@@ -99,7 +99,7 @@ class Principal extends StatelessWidget {
                     child: Column(
                       children: [
                         Card(
-                          child: Image.asset('images/teams.png'),
+                          child: Image.asset('assets/images/pokebolas.png'),
                         ),
                         const SizedBox(
                           child: Text('Teams'),
@@ -118,7 +118,7 @@ class Principal extends StatelessWidget {
                     child: Column(
                       children: [
                         Card(
-                          child: Image.asset('images/favoritos.png'),
+                          child: Image.asset('assets/images/estrela.png'),
                         ),
                         const SizedBox(
                           child: Text('Favorites'),
@@ -134,7 +134,7 @@ class Principal extends StatelessWidget {
                     child: Column(
                       children: [
                         Card(
-                          child: Image.asset('images/social.png'),
+                          child: Image.asset('assets/images/insignia.png'),
                         ),
                         const SizedBox(
                           child: Text('Social'),
@@ -152,6 +152,7 @@ class Principal extends StatelessWidget {
   }
 }
 
+
 class _MainState extends State<Main> {
   int indiceAtual = 1;
   final List<Widget> telas = [
@@ -166,15 +167,49 @@ class _MainState extends State<Main> {
     });
   }
 
+  navbar(){
+    return BottomNavigationBar(
+          backgroundColor: Color(0xFFD9D9D9),
+          currentIndex: indiceAtual,
+          onTap: onTabTapped,
+          items: [
+            BottomNavigationBarItem(
+              icon: Icon(
+                Icons.search,
+                size: 48,
+              ),
+              label: '',
+            ),
+            BottomNavigationBarItem(
+              icon: Image.asset(
+                'assets/images/pokebola.png',
+                width: 48,
+                height: 48,
+              ),
+              label: '',
+            ),
+            BottomNavigationBarItem(
+              icon: Image.asset(
+                'assets/images/luta.png',
+                width: 48,
+                height: 48,
+              ),
+              label: '',
+            ),
+          ],
+        );
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Principal',
       home: Scaffold(
         backgroundColor: Colors.white,
-        bottomNavigationBar: const Navbar(),
+        bottomNavigationBar: navbar(),
         body: telas[indiceAtual],
       ),
     );
   }
 }
+

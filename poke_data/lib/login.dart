@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:poke_data/cadastro.dart';
-import 'package:poke_data/principal.dart';
+import 'package:poke_data/main.dart';
 
 void main() {
   runApp(const Login());

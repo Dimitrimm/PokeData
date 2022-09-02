@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:poke_data/navbar.dart';
 import './main.dart';
 
 void main() {
@@ -42,7 +43,7 @@ class _PokedexgetState extends State<Pokedex> {
                     ]
                   )
                 ),
-                Image.asset('assets/img/bullbasaur.png', width: 100, )
+                Image.asset('assets/images/bullbasaur.png', width: 100, )
               ],
             )
         
@@ -53,15 +54,14 @@ class _PokedexgetState extends State<Pokedex> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-      //   appBar: AppBar(
-      //     title: Text('testando'),
-      // ),
+        bottomNavigationBar: Navbar(),
+        
         body: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget> [
             Padding(
               padding: const EdgeInsets.fromLTRB(0.0, 25.0, 0.0, 8.0),
-              child: Image.asset('assets/img/pokedex.png', width: 100, height:100 ,),
+              child: Image.asset('assets/images/pokedex.png', width: 100, height:100 ,),
             ),
             Padding(
               padding: const EdgeInsets.all(10.0),

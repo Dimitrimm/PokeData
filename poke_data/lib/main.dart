@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:poke_data/favorites_page.dart';
+import 'package:poke_data/pokedex.dart';
+import 'package:poke_data/search_page.dart';
+import 'package:poke_data/social_page.dart';
+import 'package:poke_data/versus_page.dart';
 import './navbar.dart';
 
 void main() {
-  runApp(const Main());
+  runApp(TelaPrincipal(1));
 }
 
-
-class Main extends StatefulWidget {
-  const Main({Key? key}) : super(key: key);
-
-  @override
-  State<Main> createState() => _MainState();
-}
 
 class Pesquisa extends StatelessWidget {
   const Pesquisa({Key? key}) : super(key: key);
@@ -77,13 +75,17 @@ class Principal extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Container(
+                  SizedBox(
                     width: 120,
                     child: Column(
                       children: [
-                        Card(
-                          shadowColor: Colors.blue,
-                          child: Image.asset('assets/images/pokedex.png'),
+                        TextButton(
+                          onPressed: (() => Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => Pokedex()))),
+                          child: Card(
+                            shadowColor: Colors.blue,
+                            child: Image.asset('assets/images/pokedex.png'),
+                          ),
                         ),
                         const SizedBox(
                           child: Text('Pokedex'),
@@ -98,9 +100,14 @@ class Principal extends StatelessWidget {
                     width: 120,
                     child: Column(
                       children: [
+                        TextButton(
+                          onPressed: () => Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => Pokedex())),
+                      child: 
                         Card(
+                          shadowColor: Colors.blue,
                           child: Image.asset('assets/images/pokebolas.png'),
-                        ),
+                        )),
                         const SizedBox(
                           child: Text('Teams'),
                         )
@@ -117,9 +124,14 @@ class Principal extends StatelessWidget {
                     width: 120,
                     child: Column(
                       children: [
+                        TextButton(
+                          onPressed: (() => Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => Favorite()))),
+                      child:
                         Card(
+                          shadowColor: Colors.blue,
                           child: Image.asset('assets/images/estrela.png'),
-                        ),
+                        )),
                         const SizedBox(
                           child: Text('Favorites'),
                         )
@@ -133,9 +145,14 @@ class Principal extends StatelessWidget {
                     width: 120,
                     child: Column(
                       children: [
+                        TextButton(
+                          onPressed: (() => Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => SocialPage()))),
+                      child:
                         Card(
+                          shadowColor: Colors.blue,
                           child: Image.asset('assets/images/insignia.png'),
-                        ),
+                        )),
                         const SizedBox(
                           child: Text('Social'),
                         )
@@ -153,52 +170,17 @@ class Principal extends StatelessWidget {
 }
 
 
-class _MainState extends State<Main> {
-  int indiceAtual = 1;
+class TelaPrincipal extends StatelessWidget{
+  int indiceAtual;
+
+  TelaPrincipal(this.indiceAtual);
+
   final List<Widget> telas = [
-    const Pesquisa(),
+    Search(),
     const Principal(),
-    const Versus()
+    const VersusPage()
   ];
 
-  void onTabTapped(int index) {
-    setState(() {
-      indiceAtual = index;
-    });
-  }
-
-  navbar(){
-    return BottomNavigationBar(
-          backgroundColor: Color(0xFFD9D9D9),
-          currentIndex: indiceAtual,
-          onTap: onTabTapped,
-          items: [
-            BottomNavigationBarItem(
-              icon: Icon(
-                Icons.search,
-                size: 48,
-              ),
-              label: '',
-            ),
-            BottomNavigationBarItem(
-              icon: Image.asset(
-                'assets/images/pokebola.png',
-                width: 48,
-                height: 48,
-              ),
-              label: '',
-            ),
-            BottomNavigationBarItem(
-              icon: Image.asset(
-                'assets/images/luta.png',
-                width: 48,
-                height: 48,
-              ),
-              label: '',
-            ),
-          ],
-        );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -206,10 +188,13 @@ class _MainState extends State<Main> {
       title: 'Principal',
       home: Scaffold(
         backgroundColor: Colors.white,
-        bottomNavigationBar: navbar(),
+        bottomNavigationBar: Navbar(),
         body: telas[indiceAtual],
       ),
     );
   }
+  
+    
+  
 }
 

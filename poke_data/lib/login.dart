@@ -104,7 +104,7 @@ class _MyAppState extends State<Login> {
               child: SizedBox.expand(
                 child: TextButton(
                     onPressed: (() => Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => Main()))),
+                        MaterialPageRoute(builder: (context) => TelaPrincipal(1)))),
                     child: Text(
                       'Sign up',
                       style: TextStyle(

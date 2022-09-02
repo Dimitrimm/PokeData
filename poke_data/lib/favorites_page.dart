@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:poke_data/navbar.dart';
 import './pokemonButtonMap.dart';
 import './pokemons.dart';
 
@@ -18,6 +19,7 @@ class _FavoriteState extends State<Favorite> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
+        bottomNavigationBar: Navbar(),
           body: Padding(
         padding:
             const EdgeInsets.only(top: 42, left: 22, right: 22, bottom: 22),

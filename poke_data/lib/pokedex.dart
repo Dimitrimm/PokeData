@@ -26,7 +26,7 @@ class _PokedexgetState extends State<Pokedex> {
                     children: <Widget> [
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
+                        children: const [
                           Flexible(child: Text("Pokémon"), )
                           
                         ],
@@ -42,7 +42,7 @@ class _PokedexgetState extends State<Pokedex> {
                     ]
                   )
                 ),
-                Image.asset('assets/img/bullbasaur.png', width: 100, )
+                Image.asset('assets/images/bullbasaur.png', width: 100, )
               ],
             )
         
@@ -61,11 +61,11 @@ class _PokedexgetState extends State<Pokedex> {
           children: <Widget> [
             Padding(
               padding: const EdgeInsets.fromLTRB(0.0, 25.0, 0.0, 8.0),
-              child: Image.asset('assets/img/pokedex.png', width: 100, height:100 ,),
+              child: Image.asset('assets/images/pokedex.png', width: 100, height:100 ,),
             ),
             Padding(
               padding: const EdgeInsets.all(10.0),
-              child:Text(
+              child: Text(
                 "Pokedex",
                 style:  TextStyle(fontSize: 24, fontWeight: FontWeight.bold)
               )
@@ -73,7 +73,7 @@ class _PokedexgetState extends State<Pokedex> {
             // Expanded(child:buildListView()),
             Expanded(
               child: GridView.builder(
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
                 ),
                 itemCount: teste.length,

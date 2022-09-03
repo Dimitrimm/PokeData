@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:poke_data/navbar.dart';
 
 void main() {
   runApp(const SocialPage());
@@ -10,12 +9,12 @@ class SocialPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const UserFollows(),
+    return const Scaffold(
+      // title: 'Flutter Demo',
+      // theme: ThemeData(
+      //   primarySwatch: Colors.blue,
+      // ),
+      body: UserFollows(),
     );
   }
 }
@@ -33,7 +32,6 @@ class _UserFollowsState extends State<UserFollows> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        bottomNavigationBar: Navbar(),
         body: Padding(
             padding: const EdgeInsets.only(top: 42, left: 22, right: 22),
             child: Column(

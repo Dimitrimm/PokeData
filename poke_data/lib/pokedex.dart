@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:poke_data/navbar.dart';
 import './main.dart';
 
 void main() {
@@ -53,9 +52,7 @@ class _PokedexgetState extends State<Pokedex> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(
-        bottomNavigationBar: Navbar(),
-        
+      home: Scaffold(        
         body: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget> [

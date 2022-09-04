@@ -24,6 +24,7 @@ class Principal extends StatelessWidget {
         child: Center(
           child: Column(
             children: [
+
               const SizedBox(
                 height: 16,
               ),

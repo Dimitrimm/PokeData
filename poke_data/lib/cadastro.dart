@@ -22,7 +22,7 @@ class _CadastroState extends State<Cadastro> {
             children: [
               Stack(
                 children: [
-                  Center(
+                  const Center(
                     child: Text("PokeData", style: TextStyle(fontSize: 32)),
                   ),
                   IconButton(
@@ -102,6 +102,7 @@ class _CadastroState extends State<Cadastro> {
                               fontSize: 16,
                               fontWeight: FontWeight.bold,
                               color: Colors.white),
+
                         ),
                       ),
                     ),

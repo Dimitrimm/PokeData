@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const Text("PokeData", style: TextStyle(fontSize: 36),),
-              SizedBox(height: 10,),
+              const SizedBox(height: 10,),
               Image.asset('images/pokebola.png', width: 300,)
           ],)
         ),

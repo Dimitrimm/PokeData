@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class PokemonButtonMap extends StatelessWidget {
   final Map<String, String> pikomons;
 
-  PokemonButtonMap(this.pikomons);
+  const PokemonButtonMap(this.pikomons, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

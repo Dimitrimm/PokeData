@@ -3,9 +3,12 @@ import './pokemonButtonMap.dart';
 import './searchBar.dart';
 import './pokemons.dart';
 
-main() => runApp(Search());
+main() => runApp(const Search());
 
 class Search extends StatefulWidget {
+  const Search({Key? key}) : super(key: key);
+
+  @override
   _SearchState createState() {
     return _SearchState();
   }

@@ -24,7 +24,7 @@ class Cadastro extends StatelessWidget {
               color: Colors.white,
               child: ListView(
                 children: [
-                  Center(
+                  const Center(
                     child: Text("PokeData", style: TextStyle(fontSize: 32)),
                   ),
                   const SizedBox(
@@ -36,7 +36,7 @@ class Cadastro extends StatelessWidget {
                     child: Image.asset('images/pokebola.png'),
                   ),
                   const SizedBox(height: 20),
-                  Center(
+                  const Center(
                       child: Text('Registro', style: TextStyle(fontSize: 24))),
                   const SizedBox(height: 30),
                   TextFormField(
@@ -51,7 +51,7 @@ class Cadastro extends StatelessWidget {
                         )),
                     style: const TextStyle(fontSize: 16),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   TextFormField(
@@ -66,7 +66,7 @@ class Cadastro extends StatelessWidget {
                         )),
                     style: const TextStyle(fontSize: 16),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   TextFormField(
@@ -97,7 +97,7 @@ class Cadastro extends StatelessWidget {
                         child: SizedBox.expand(
                           child: TextButton(
                             onPressed: (() => Navigator.push(context, MaterialPageRoute(builder: (context) => Login()))),
-                            child: Text(
+                            child: const Text(
                               'Sign up',
                               style: TextStyle(
                                   fontSize: 16,

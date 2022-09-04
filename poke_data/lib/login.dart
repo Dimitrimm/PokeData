@@ -24,7 +24,7 @@ class _MyAppState extends State<Login> {
       ),
       child: ListView(
         children: [
-          Center(
+          const Center(
             child: Text("PokeData", style: TextStyle(fontSize: 32)),
           ),
           const SizedBox(
@@ -48,7 +48,7 @@ class _MyAppState extends State<Login> {
                 )),
             style: const TextStyle(fontSize: 16),
           ),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
           TextFormField(
@@ -89,8 +89,8 @@ class _MyAppState extends State<Login> {
                 ),
               ),
             ),
-            SizedBox(height: 10),
-            Center(
+            const SizedBox(height: 10),
+            const Center(
               child: Text("Or", style: TextStyle(fontSize: 16)),
             ),
             const SizedBox(height: 10),
@@ -105,7 +105,7 @@ class _MyAppState extends State<Login> {
                 child: TextButton(
                     onPressed: (() => Navigator.push(context,
                         MaterialPageRoute(builder: (context) => Main()))),
-                    child: Text(
+                    child: const Text(
                       'Sign up',
                       style: TextStyle(
                           fontSize: 16,

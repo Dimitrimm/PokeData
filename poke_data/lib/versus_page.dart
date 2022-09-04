@@ -133,13 +133,13 @@ class _VersusPageState extends State<VersusPage> {
           Card(
               color: Colors.grey[300],
               child: Padding(
-                padding: EdgeInsets.all(5),
+                padding: const EdgeInsets.all(5),
                 child: Text(tipo1),
               )),
           Card(
               color: Colors.grey[300],
               child: Padding(
-                padding: EdgeInsets.all(5),
+                padding: const EdgeInsets.all(5),
                 child: Text(tipo2),
               )),
         ],
@@ -159,13 +159,13 @@ class _VersusPageState extends State<VersusPage> {
           Card(
               color: Colors.grey[300],
               child: Padding(
-                padding: EdgeInsets.all(5),
+                padding: const EdgeInsets.all(5),
                 child: Text(weak1),
               )),
           Card(
               color: Colors.grey[300],
               child: Padding(
-                padding: EdgeInsets.all(5),
+                padding: const EdgeInsets.all(5),
                 child: Text(weak2),
               )),
         ],
@@ -176,7 +176,7 @@ class _VersusPageState extends State<VersusPage> {
   _pokemonStatus() {
     return Column(children: [
       _pokemonName(),
-      Text(
+      const Text(
         "Base Status",
         style: TextStyle(fontSize: 15),
       ),
@@ -186,10 +186,10 @@ class _VersusPageState extends State<VersusPage> {
         _percentIndicator("DEF", Colors.red.shade700, 0.8),
         _percentIndicator("SPD", Colors.yellow, 0.1)
       ]),
-      SizedBox(
+      const SizedBox(
         height: 15,
       ),
-      Text(
+      const Text(
         "Special Status",
         style: TextStyle(fontSize: 15),
       ),
@@ -207,7 +207,7 @@ class _VersusPageState extends State<VersusPage> {
     return Expanded(
         child: Column(
       mainAxisAlignment: MainAxisAlignment.start,
-      children: [
+      children: const [
         Text(
           "Snorlax",
           style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),

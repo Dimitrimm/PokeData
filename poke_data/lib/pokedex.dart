@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import './main.dart';
 
 void main() {
-  runApp(new Pokedex());
+  runApp(const Pokedex());
 }
 
 class Pokedex extends StatefulWidget {
@@ -116,8 +116,8 @@ class _PokedexgetState extends State<Pokedex> {
                 height: 100,
               ),
             ),
-            Padding(
-                padding: const EdgeInsets.all(5.0),
+            const Padding(
+                padding: EdgeInsets.all(5.0),
                 child: Text("Pokedex",
                     style:
                         TextStyle(fontSize: 24, fontWeight: FontWeight.bold))),

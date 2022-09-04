@@ -52,7 +52,7 @@ class Principal extends StatelessWidget {
                     child: SizedBox(
                         child: Image.asset(
                       'assets/images/engrenagem.png',
-                      width: 32,
+                      width: 32, 
                       height: 32,
                     )),
                   )),

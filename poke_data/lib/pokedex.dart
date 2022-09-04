@@ -13,159 +13,130 @@ class Pokedex extends StatefulWidget {
 }
 
 class _PokedexgetState extends State<Pokedex> {
-  final List<int> teste = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 
-  20, 21, 22, 23, 24, 25];
+  final List<int> teste = [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25
+  ];
 
-  createCard(pokemon){
+  createCard(pokemon) {
     return Card(
-            child: Column(
-              children: [
-                ListTile(
-                  leading: IconButton(onPressed: (){}, icon: const Icon(Icons.favorite_border)),
-                  title: Column(
-                    children: <Widget> [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          Flexible(child: Text("Pokémon"), )
-                          
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          Text("${pokemon}"),
-                        ],
-                      )
-                    
-                    
-                    ]
-                  )
-                ),
-                Image.asset('assets/img/bullbasaur.png', width: 100, )
-              ],
-            )
-        
-          );
+        child: Column(
+      children: [
+        ListTile(
+            title: Container(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              IconButton(
+                icon: const Icon(Icons.star_border),
+                onPressed: () {},
+                iconSize: 30,
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [ 
+                  const Text("Pokémon"),
+                  Text("#${pokemon}"),
+                ],
+              )
+            ],
+          ),
+        )),
+        Image.asset(
+          'assets/images/bullbasaur.png',
+          width: 100,
+        )
+      ],
+    ));
   }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(
-      //   appBar: AppBar(
-      //     title: Text('testando'),
-      // ),
-        body: Column(
+        home: Scaffold(
+        body: Container(
+        padding: const EdgeInsets.only(top: 60),
+        child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget> [
+          children: <Widget>[
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                  padding: const EdgeInsets.only(left: 21),
+                  alignment: Alignment.topLeft,
+                  child: const BackButton(
+                    color: Colors.black,
+                  ),
+                ),
+                Container(
+                  padding: const EdgeInsets.only(right: 21),
+                  alignment: Alignment.topRight,
+                  child: IconButton(
+                    icon: const Icon(
+                      Icons.search,
+                      size: 35,
+                    ),
+                    onPressed: () => print('oi'),
+                  ),
+                )
+              ],
+            ),
+
             Padding(
-              padding: const EdgeInsets.fromLTRB(0.0, 25.0, 0.0, 8.0),
-              child: Image.asset('assets/img/pokedex.png', width: 100, height:100 ,),
+              padding: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
+              child: Image.asset(
+                'assets/images/pokedex.png',
+                width: 100,
+                height: 100,
+              ),
             ),
             Padding(
-              padding: const EdgeInsets.all(10.0),
-              child:Text(
-                "Pokedex",
-                style:  TextStyle(fontSize: 24, fontWeight: FontWeight.bold)
-              )
-            ),
+                padding: const EdgeInsets.all(5.0),
+                child: Text("Pokedex",
+                    style:
+                        TextStyle(fontSize: 24, fontWeight: FontWeight.bold))),
             // Expanded(child:buildListView()),
             Expanded(
-              child: GridView.builder(
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                ),
-                itemCount: teste.length,
-                itemBuilder: (context, index){
-                  final item = teste[index];
+                child: GridView.builder(
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                    ),
+                    itemCount: teste.length,
+                    itemBuilder: (context, index) {
+                      final item = teste[index];
 
-                  return createCard(item);
-                }
-              )
-            )
+                      return createCard(item);
+                    }))
           ],
         ),
-      )
-    );
-    
+      ),
+    ));
   }
 }
-
-
-  // buildListView(){
-    // return ListView.builder(
-      // itemCount: teste.length,
-      // itemBuilder: (context, index ){
-        // return Card(
-          // child: ListTile(
-            // title: Text('${teste[index]}'),
-          // ),        
-        // 
-        // ); 
-      // },
-    // );
-  // }
-
-
-
-//  buildListView(){
-    // return ListView.builder(
-      // itemCount: teste.length,
-      // itemBuilder: (context, index ){
-        // return Card(
-          // child: Column(
-            // children: [
-              // ListTile(
-                // leading: Text('Teste'),
-                // title: Text('${teste[index]}'),
-              // ),
-              // Image.asset('assets/img/bullbasaur.png', width: 80, )
-            // ],
-          // )
-        // 
-        // ); 
-      // },
-    // );
-  // }
-
-
-  // buildListView(){
-  //   return ListView.builder(
-  //     itemCount: teste.length,
-  //     itemBuilder: (context, index ){
-  //       return SizedBox(
-  //         child:  Card(
-  //           child: Column(
-  //             children: [
-  //               ListTile(
-  //                 leading: IconButton(onPressed: (){}, icon: const Icon(Icons.favorite_border)),
-  //                 title: Column(
-  //                   children: <Widget> [
-  //                     Row(
-  //                       mainAxisAlignment: MainAxisAlignment.end,
-  //                       children: [
-  //                         Flexible(child: Text("Pokémon"), )
-                          
-  //                       ],
-  //                     ),
-  //                     Row(
-  //                       mainAxisAlignment: MainAxisAlignment.end,
-  //                       children: [
-  //                         Text("${teste[index]}"),
-  //                       ],
-  //                     )
-                    
-                    
-  //                   ]
-  //                 )
-  //               ),
-  //               Image.asset('assets/img/bullbasaur.png', width: 80, )
-  //             ],
-  //           )
-        
-  //         ),
-  //       );
-  //     },
-  //   );
-  // }

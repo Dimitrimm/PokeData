@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:poke_data/login.dart';
 import './search_page.dart';
 
 main() => runApp(const Config());
@@ -54,7 +55,7 @@ class _ConfigState extends State<Config> {
                     Button('Alterar email', Search()),
                     Button('Alterar senha', Search()),
                     ButtonT('Versão', '4.3.3'),
-                    Button('Logout', Search()),
+                    Button('Logout', Login()),
                   ],
                 ),
               )

@@ -30,7 +30,7 @@ class _SimilarState extends State<Similar> {
   _similarLogo(){
     return Container(
       padding: const EdgeInsets.only(
-        top: 60
+        top: 40
       ),
       child: Column(
         children: [
@@ -74,6 +74,16 @@ class _SimilarState extends State<Similar> {
           ),
           child: Column(
             children: <Widget> [
+              Container(
+                padding: const EdgeInsets.only(
+                  top: 20,
+                ),
+                alignment: Alignment.topLeft,
+                child: BackButton(
+                  color: Colors.black,
+                  onPressed: (){print('teste');},
+                ),
+              ),
               _similarLogo(),
               const SizedBox(
                 width: 20,
@@ -87,21 +97,26 @@ class _SimilarState extends State<Similar> {
   }
 }
 
-
-
-// Scaffold(
-      // body: Padding(
-        // padding: const EdgeInsets.only(
-          // top: 42 ,
-          // left: 22,
-          // right: 22 
+//  @override
+  // Widget build(BuildContext context) {
+    // return MaterialApp(
+      // home: Scaffold(
+        // body: Padding(
+          // padding: const EdgeInsets.only(
+            // top: 42,
+            // left: 22,
+            // right: 22
+          // ),
+          // child: Column(
+            // children: <Widget> [
+              // _similarLogo(),
+              // const SizedBox(
+                // width: 20,
+              // ),
+              // _pokemonsSimiliarListView()
+            // ],
+          // ),
         // ),
-        // child: Column(
-          // mainAxisAlignment: MainAxisAlignment.center,
-          // children: <Widget>[
-            // _similarLogo(),
-            // _pokemonsSimiliarListView()
-          // ],
-        // ),
-      // ),
+      // ) ,
     // );
+  // }

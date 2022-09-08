@@ -36,6 +36,12 @@ class _SearchState extends State<Search> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
+            IconButton(
+                onPressed: () => Navigator.pop(context),
+                icon: const Icon(
+                  Icons.arrow_back_ios_outlined,
+                  size: 18.0,
+                )),
             buildSearch(),
             const SizedBox(
               height: 10,

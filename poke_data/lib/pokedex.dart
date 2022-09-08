@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:poke_data/search_page.dart';
 import './main.dart';
 
 void main() {
@@ -7,12 +8,15 @@ void main() {
 
 class Pokedex extends StatefulWidget {
   const Pokedex({Key? key}) : super(key: key);
+   
 
   @override
   State<Pokedex> createState() => _PokedexgetState();
 }
 
 class _PokedexgetState extends State<Pokedex> {
+
+  final salvos = [];
   final List<int> teste = [
     1,
     2,
@@ -42,6 +46,7 @@ class _PokedexgetState extends State<Pokedex> {
   ];
 
   createCard(pokemon) {
+    final ja_salvo = salvos.contains(pokemon);
     return Card(
         child: Column(
       children: [
@@ -52,14 +57,24 @@ class _PokedexgetState extends State<Pokedex> {
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               IconButton(
-                icon: const Icon(Icons.star_border),
-                onPressed: () {},
+                icon: ja_salvo ? Icon(Icons.star) : Icon(Icons.star_border),
+                color: ja_salvo ? Colors.yellow : null,
+                onPressed: () {
+                  setState(() {
+                    if (ja_salvo){
+                      salvos.remove(pokemon);
+                    }
+                    else{
+                      salvos.add(pokemon);
+                    }
+                  });
+                },
                 iconSize: 30,
               ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 mainAxisAlignment: MainAxisAlignment.start,
-                children: [ 
+                children: [
                   const Text("Pokémon"),
                   Text("#${pokemon}"),
                 ],
@@ -77,9 +92,10 @@ class _PokedexgetState extends State<Pokedex> {
 
   @override
   Widget build(BuildContext context) {
+
     return MaterialApp(
         home: Scaffold(
-        body: Container(
+      body: Container(
         padding: const EdgeInsets.only(top: 60),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -90,9 +106,12 @@ class _PokedexgetState extends State<Pokedex> {
                 Container(
                   padding: const EdgeInsets.only(left: 21),
                   alignment: Alignment.topLeft,
-                  child: const BackButton(
-                    color: Colors.black,
-                  ),
+                  child: IconButton(
+                      onPressed: () => Navigator.pop(context),
+                      icon: const Icon(
+                        Icons.arrow_back_ios_outlined,
+                        size: 18.0,
+                      )),
                 ),
                 Container(
                   padding: const EdgeInsets.only(right: 21),
@@ -102,7 +121,8 @@ class _PokedexgetState extends State<Pokedex> {
                       Icons.search,
                       size: 35,
                     ),
-                    onPressed: () => print('oi'),
+                    onPressed: (() => Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => Search()))),
                   ),
                 )
               ],

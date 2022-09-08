@@ -9,12 +9,12 @@ class SocialPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const UserFollows(),
+    return const Scaffold(
+      // title: 'Flutter Demo',
+      // theme: ThemeData(
+      //   primarySwatch: Colors.blue,
+      // ),
+      body: UserFollows(),
     );
   }
 }
@@ -73,58 +73,56 @@ class _UserFollowsState extends State<UserFollows> {
             ],
           )),
       IconButton(
-        onPressed: () => Navigator.pop(context),
-        icon: const Icon(
-          Icons.arrow_back_ios_outlined,
-          size: 18.0,
-        ))
+          onPressed: () => Navigator.pop(context),
+          icon: const Icon(
+            Icons.arrow_back_ios_outlined,
+            size: 18.0,
+          ))
     ]);
   }
 
   _tabBar() {
     return Row(
-    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    children: [ Row(
-      children: <Widget>[
-        GestureDetector(
-          onTap: () => _selectTabItem("Following"),
-          child: Text(
-            "Following",
-            style: TextStyle(
-                fontSize: 13,
-                fontWeight: (currentTab == "Following"
-                    ? FontWeight.bold
-                    : FontWeight.normal)),
-          ),
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Row(
+          children: <Widget>[
+            GestureDetector(
+              onTap: () => _selectTabItem("Following"),
+              child: Text(
+                "Following",
+                style: TextStyle(
+                    fontSize: 13,
+                    fontWeight: (currentTab == "Following"
+                        ? FontWeight.bold
+                        : FontWeight.normal)),
+              ),
+            ),
+            const SizedBox(
+              width: 10,
+            ),
+            GestureDetector(
+              onTap: () => _selectTabItem("Followers"),
+              child: Text(
+                "Followers",
+                style: TextStyle(
+                    fontSize: 13,
+                    fontWeight: (currentTab == "Followers"
+                        ? FontWeight.bold
+                        : FontWeight.normal)),
+              ),
+            ),
+          ],
         ),
-        const SizedBox(
-          width: 10,
-        ),
-        GestureDetector(
-          onTap: () => _selectTabItem("Followers"),
-          child: Text(
-            "Followers",
-            style: TextStyle(
-                fontSize: 13,
-                fontWeight: (currentTab == "Followers"
-                    ? FontWeight.bold
-                    : FontWeight.normal)),
-          ),
-        ),
+        IconButton(
+            onPressed: _followTrainer(),
+            icon: const Icon(
+              Icons.add,
+              size: 30.0,
+            ))
       ],
-    ),
-      IconButton(
-        onPressed: _followTrainer(),
-        icon: const Icon(
-        Icons.add,
-        size: 30.0, 
-        ))
-        ],
     );
-    
   }
-
-
 
   _selectTabItem(String tabName) {
     if (tabName != currentTab) {
@@ -140,9 +138,7 @@ class _UserFollowsState extends State<UserFollows> {
     }
   }
 
-  _followTrainer() {
-    
-  }
+  _followTrainer() {}
 
   _followingListView() {
     return Expanded(
@@ -158,7 +154,7 @@ class _UserFollowsState extends State<UserFollows> {
     ));
   }
 
-    _followersListView() {
+  _followersListView() {
     return Expanded(
         child: ListView(
       padding: EdgeInsets.zero,

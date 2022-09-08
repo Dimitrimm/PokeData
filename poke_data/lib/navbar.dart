@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:poke_data/search_page.dart';
 import 'main.dart';
+import 'versus_page.dart';
+
 
 class Navbar extends StatefulWidget {
   const Navbar({Key? key}) : super(key: key);
@@ -13,9 +16,9 @@ class Navbar extends StatefulWidget {
 class _NavbarState extends State<Navbar> {
 
   final List<Widget> telas = [
-    const Pesquisa(),
+    Search(),
     const Principal(),
-    const Versus()
+    const VersusPage()
   ];
   
   @override
@@ -25,34 +28,40 @@ class _NavbarState extends State<Navbar> {
   
   void onTabTapped(int index) {
     setState(() {
+
       indiceAtual = index;
+
+      Navigator.push(context, MaterialPageRoute(builder: (context) => TelaPrincipal(indiceAtual)));
+
     });
   }
     return BottomNavigationBar(
           backgroundColor: Color(0xFFD9D9D9),
+          showUnselectedLabels: false,
+          showSelectedLabels: false,
           currentIndex: indiceAtual,
           onTap: onTabTapped,
           items: [
             BottomNavigationBarItem(
               icon: Icon(
                 Icons.search,
-                size: 48,
+                size: 40,
               ),
               label: '',
             ),
             BottomNavigationBarItem(
               icon: Image.asset(
                 'assets/images/pokebola.png',
-                width: 48,
-                height: 48,
+                width: 40,
+                height: 40,
               ),
               label: '',
             ),
             BottomNavigationBarItem(
               icon: Image.asset(
                 'assets/images/luta.png',
-                width: 48,
-                height: 48,
+                width: 40,
+                height: 40,
               ),
               label: '',
             ),

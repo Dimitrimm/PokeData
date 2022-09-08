@@ -9,11 +9,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:poke_data/main.dart';
+import 'package:poke_data/navbar.dart';
 
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(const Main());
+    await tester.pumpWidget(TelaPrincipal(1));
 
     // Verify that our counter starts at 0.
     expect(find.text('0'), findsOneWidget);

@@ -52,11 +52,17 @@ class _VersusPageState extends State<VersusPage> {
   _topStack() {
     return Stack(
       children: [
+        IconButton(
+            onPressed: () => Navigator.pop(context),
+            icon: const Icon(
+              Icons.arrow_back_ios_outlined,
+              size: 18.0,
+            )),
         Center(
           child: Image.asset(
             height: 100,
             width: 100,
-            "assets/images/versus.png",
+            "assets/images/luta.png",
           ),
         ),
         Positioned(
@@ -65,7 +71,7 @@ class _VersusPageState extends State<VersusPage> {
           child: Image.asset(
             height: 45,
             width: 35,
-            "assets/images/star.png",
+            "assets/images/estrela.png",
           ),
         )
       ],

@@ -20,7 +20,6 @@ class _SearchState extends State<Search> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
 
     pikomons = pokemons;
@@ -36,12 +35,17 @@ class _SearchState extends State<Search> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            IconButton(
-                onPressed: () => Navigator.pop(context),
-                icon: const Icon(
-                  Icons.arrow_back_ios_outlined,
-                  size: 18.0,
-                )),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                IconButton(
+                    onPressed: () => Navigator.pop(context),
+                    icon: const Icon(
+                      Icons.arrow_back_ios_outlined,
+                      size: 18.0,
+                    )),
+              ],
+            ),
             buildSearch(),
             const SizedBox(
               height: 10,

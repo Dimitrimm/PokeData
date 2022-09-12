@@ -1,6 +1,8 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:poke_data/search_page.dart';
 import './main.dart';
+import 'package:http/http.dart' as http;
 
 void main() {
   runApp(const Pokedex());
@@ -8,15 +10,24 @@ void main() {
 
 class Pokedex extends StatefulWidget {
   const Pokedex({Key? key}) : super(key: key);
-   
 
   @override
   State<Pokedex> createState() => _PokedexgetState();
 }
 
 class _PokedexgetState extends State<Pokedex> {
-
   final salvos = [];
+
+  Future<List> fetch() async {
+    var url = Uri.parse('http://10.0.2.2:5000/allpokemons');
+    var response = await http.get(url);
+    if (response.statusCode == 200) {
+      return jsonDecode(utf8.decode(response.bodyBytes));
+    } else {
+      return throw Exception("Error ao conectar-se ao servidor");
+    }
+  }
+
   final List<int> teste = [
     1,
     2,
@@ -46,53 +57,58 @@ class _PokedexgetState extends State<Pokedex> {
   ];
 
   createCard(pokemon) {
+
     final ja_salvo = salvos.contains(pokemon);
+
     return Card(
-        child: Column(
-      children: [
-        ListTile(
-            title: Container(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              IconButton(
-                icon: ja_salvo ? Icon(Icons.star) : Icon(Icons.star_border),
-                color: ja_salvo ? Colors.yellow : null,
-                onPressed: () {
-                  setState(() {
-                    if (ja_salvo){
-                      salvos.remove(pokemon);
-                    }
-                    else{
-                      salvos.add(pokemon);
-                    }
-                  });
-                },
-                iconSize: 30,
+      child: Column(
+        children: [
+              ListTile(
+                title: Container(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      IconButton(
+                        icon: ja_salvo
+                            ? const Icon(Icons.star)
+                            : const Icon(Icons.star_border),
+                        color: ja_salvo ? Colors.yellow : null,
+                        onPressed: () {
+                          setState(() {
+                            if (ja_salvo) {
+                              salvos.remove(pokemon);
+                            } else {
+                              salvos.add(pokemon);
+                            }
+                          });
+                        },
+                        iconSize: 30,
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text(pokemon['name']),
+                          Text("#${pokemon['pokedex_number']}"),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
               ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  const Text("Pokémon"),
-                  Text("#${pokemon}"),
-                ],
-              )
-            ],
-          ),
-        )),
-        Image.asset(
-          'assets/images/bullbasaur.png',
-          width: 100,
-        )
-      ],
-    ));
+          Image.network(
+            'https://raw.githubusercontent.com/Dimitrimm/pokemonAssets/master/${pokemon["img"]}.png',
+            width: 100,
+            height: 100,
+          )
+        ],
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-
     return MaterialApp(
         home: Scaffold(
       body: Container(
@@ -143,17 +159,34 @@ class _PokedexgetState extends State<Pokedex> {
                         TextStyle(fontSize: 24, fontWeight: FontWeight.bold))),
             // Expanded(child:buildListView()),
             Expanded(
-                child: GridView.builder(
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                    ),
-                    itemCount: teste.length,
-                    itemBuilder: (context, index) {
-                      final item = teste[index];
+                child: FutureBuilder<List>(
+              future: fetch(),
+              builder: (context, snapshot) {
+                if (snapshot.hasError) {
+                  return const Center(
+                    child: Text("Erro ao carregar os pokémons"),
+                  );
+                }
 
-                      return createCard(item);
-                    }))
+                if (snapshot.hasData) {
+                  return GridView.builder(
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                      ),
+                      itemCount: snapshot.data!.length,
+                      itemBuilder: (context, index) {
+                        final item = snapshot.data![index];
+
+                        return createCard(item);
+                      });
+                }
+
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              },
+            ))
           ],
         ),
       ),

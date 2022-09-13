@@ -1,11 +1,16 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:poke_data/pokemon_info.dart';
 import 'package:poke_data/search_page.dart';
 import './main.dart';
 import 'package:http/http.dart' as http;
 
 void main() {
-  runApp(const Pokedex());
+  runApp(
+    const MaterialApp(
+      home: Pokedex(),
+    )
+  );
 }
 
 class Pokedex extends StatefulWidget {
@@ -23,6 +28,7 @@ class _PokedexgetState extends State<Pokedex> {
     var response = await http.get(url);
     if (response.statusCode == 200) {
       return jsonDecode(utf8.decode(response.bodyBytes));
+
     } else {
       return throw Exception("Error ao conectar-se ao servidor");
     }
@@ -59,51 +65,60 @@ class _PokedexgetState extends State<Pokedex> {
   createCard(pokemon) {
 
     final ja_salvo = salvos.contains(pokemon);
+    
+    //  onPressed: () => Navigator.of(context).pushReplacement(
+                        // MaterialPageRoute(builder: (context) => const Principal()),
+                      // ),
 
-    return Card(
-      child: Column(
-        children: [
-              ListTile(
-                title: Container(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      IconButton(
-                        icon: ja_salvo
-                            ? const Icon(Icons.star)
-                            : const Icon(Icons.star_border),
-                        color: ja_salvo ? Colors.yellow : null,
-                        onPressed: () {
-                          setState(() {
-                            if (ja_salvo) {
-                              salvos.remove(pokemon);
-                            } else {
-                              salvos.add(pokemon);
-                            }
-                          });
-                        },
-                        iconSize: 30,
-                      ),
-                      Column(
+    return InkWell(
+       onTap:()=> Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (context) => const PokemonInfo(/*passar o parâmetro para tela de dimas pokemon['pokedex_number'],*/),)
+       ) ,
+       child:Card(
+          child: Column(
+            children: [
+                  ListTile(
+                    title: Ink(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.end,
-                        mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          Text(pokemon['name']),
-                          Text("#${pokemon['pokedex_number']}"),
+                          IconButton(
+                            icon: ja_salvo
+                                ? const Icon(Icons.star)
+                                : const Icon(Icons.star_border),
+                            color: ja_salvo ? Colors.yellow : null,
+                            onPressed: () {
+                              setState(() {
+                                if (ja_salvo) {
+                                  salvos.remove(pokemon);
+                                } else {
+                                  salvos.add(pokemon);
+                                }
+                              });
+                            },
+                            iconSize: 30,
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Text(pokemon['name']),
+                              Text("#${pokemon['pokedex_number']}"),
+                            ],
+                          ),
                         ],
                       ),
-                    ],
+                    ),
                   ),
-                ),
-              ),
-          Image.network(
-            'https://raw.githubusercontent.com/Dimitrimm/pokemonAssets/master/${pokemon["img"]}.png',
-            width: 100,
-            height: 100,
-          )
-        ],
-      ),
+              Image.network(
+                'https://raw.githubusercontent.com/Dimitrimm/pokemonAssets/master/${pokemon["img"]}.png',
+                width: 100,
+                height: 100,
+              )
+            ],
+          ),
+        ),
     );
   }
 
@@ -123,7 +138,9 @@ class _PokedexgetState extends State<Pokedex> {
                   padding: const EdgeInsets.only(left: 21),
                   alignment: Alignment.topLeft,
                   child: IconButton(
-                      onPressed: () => Navigator.pop(context),
+                      onPressed: () => Navigator.of(context).pushReplacement(
+                        MaterialPageRoute(builder: (context) => const Principal()),
+                      ),
                       icon: const Icon(
                         Icons.arrow_back_ios_outlined,
                         size: 18.0,

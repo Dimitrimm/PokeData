@@ -2,6 +2,7 @@ import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:poke_data/auth_page.dart';
+import 'package:poke_data/auth_services.dart';
 import 'package:poke_data/cadastro.dart';
 import 'package:poke_data/form_data.dart';
 import 'package:poke_data/main.dart';
@@ -66,18 +67,7 @@ class _MyAppState extends State<Login> {
                 child: SizedBox.expand(
                   child: TextButton(
                     onPressed: (() {
-                      if (_formData.isLogin)
-                        _submit();
-                        // Navigator.push(
-                        //     context,
-                        //     MaterialPageRoute(
-                        //         builder: (context) => TelaPrincipal()));
-                      else if (_formData.isSignup)
-                        _submit();
-                        // Navigator.push(
-                        //     context,
-                        //     MaterialPageRoute(
-                        //         builder: (context) => Login(onSubmit: (_) {},)));
+                      _submit();
                     }),
                     child: Text(
                       _formData.isLogin ? 'Sign in' : 'Sign up',

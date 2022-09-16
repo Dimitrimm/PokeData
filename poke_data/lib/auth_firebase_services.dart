@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:poke_data/auth_services.dart';
 import 'package:poke_data/usuario.dart';
 import 'dart:async';
@@ -33,15 +34,32 @@ class AuthFireBaseService implements AuthService {
     if (credencial.user == null) return;
 
     credencial.user?.updateDisplayName(name);
+    await saveUser(_toUsuario(credencial.user!));
   }
 
   Future<void> login(
     String email,
     String password,
-  ) async {}
+  ) async {
+    await FirebaseAuth.instance.signInWithEmailAndPassword(
+      email: email,
+      password: password,
+    );
+  }
 
   Future<void> logout() async {
     FirebaseAuth.instance.signOut();
+  }
+
+  Future<void> saveUser(Usuario user) async{
+    DatabaseReference ref = FirebaseDatabase.instance.ref("users/$user.id");
+
+    return ref.set({
+      "name": user.name,
+      "img": 1,
+      "favorites": 'pikachu',
+      "displayName": '',
+    });
   }
 
   static Usuario _toUsuario(User user) {
@@ -52,3 +70,8 @@ class AuthFireBaseService implements AuthService {
     );
   }
 }
+
+// class DataBaseUser {
+//   uid
+//   void Function(){}
+// }

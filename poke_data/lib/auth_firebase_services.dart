@@ -6,7 +6,7 @@ import 'dart:async';
 
 class AuthFireBaseService implements AuthService {
   static Usuario? _currentUser;
-
+  
   static final _userStream = Stream<Usuario?>.multi((controller) async {
     final authChanges = FirebaseAuth.instance.authStateChanges();
     await for (final user in authChanges) {
@@ -34,7 +34,7 @@ class AuthFireBaseService implements AuthService {
     if (credencial.user == null) return;
 
     credencial.user?.updateDisplayName(name);
-    await saveUser(_toUsuario(credencial.user!));
+    saveUser();
   }
 
   Future<void> login(
@@ -51,15 +51,22 @@ class AuthFireBaseService implements AuthService {
     FirebaseAuth.instance.signOut();
   }
 
-  Future<void> saveUser(Usuario user) async{
-    DatabaseReference ref = FirebaseDatabase.instance.ref("users/$user.id");
-
-    return ref.set({
-      "name": user.name,
+  Future<void> saveUser() async{
+    String userUid = _currentUser!.id;
+    DatabaseReference ref = FirebaseDatabase.instance.ref("users/$userUid");
+    await ref.set({
+      "name": _currentUser!.name,
       "img": 1,
-      "favorites": 'pikachu',
-      "displayName": '',
+      "favorites": '',
     });
+
+    //recuperando dados
+    ref.onValue.listen((DatabaseEvent event) {
+      final data = event.snapshot.value;
+      print(data);
+    });
+
+
   }
 
   static Usuario _toUsuario(User user) {

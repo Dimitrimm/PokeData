@@ -41,12 +41,16 @@ class _PokedexgetState extends State<Pokedex> {
     });
   }
 
+
   _getUserData(id) async {
     print('gfetUserData USerID' + userID);
-    final ref = FirebaseDatabase.instance.ref('users/${id}/favorites');
+    final ref = FirebaseDatabase.instance.ref('users/${id}');
     final snapshot = await ref.get();
     if (snapshot.exists) {
-        userData = snapshot.value;
+      setState(() {
+        userData =snapshot.value;
+      });
+        
     } else {
       print('No data available.');
     }
@@ -102,7 +106,8 @@ class _PokedexgetState extends State<Pokedex> {
                         setState(() {
                           if (ja_salvo) {
                             salvos.remove(pokemon);
-                            print(favorites);
+                            print(userData['favorites']);
+                            print(userID);
                           } else {
                             salvos.add(pokemon);
                           }
@@ -168,7 +173,7 @@ class _PokedexgetState extends State<Pokedex> {
                       size: 35,
                     ),
                     onPressed: (() => Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => Search()))),
+                        MaterialPageRoute(builder: (context) => const Search()))),
                   ),
                 )
               ],

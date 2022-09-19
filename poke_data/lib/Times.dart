@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import './pokemonButtonMap.dart';
-import './pokemonsPorTime.dart';
+// import './pokemonsPorTime.dart';
 import './search_page.dart';
 
 main() => runApp(viewTimes());
@@ -13,7 +13,7 @@ class viewTimes extends StatefulWidget {
 }
 
 class _viewTimesState extends State<viewTimes> {
-  final time = pokemons;
+  // final time = pokemons;
 
   @override
   Widget build(BuildContext context) {

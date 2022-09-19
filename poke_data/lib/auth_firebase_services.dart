@@ -1,13 +1,15 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:poke_data/auth_services.dart';
+import 'package:poke_data/login.dart';
 import 'package:poke_data/usuario.dart';
 import 'dart:async';
-import 'dart:convert';
 
 class AuthFireBaseService implements AuthService {
   static Usuario? _currentUser;
-  
+  String nome = '';
+  String imagem = '';
+
   static final _userStream = Stream<Usuario?>.multi((controller) async {
     final authChanges = FirebaseAuth.instance.authStateChanges();
     await for (final user in authChanges) {
@@ -28,6 +30,7 @@ class AuthFireBaseService implements AuthService {
     String name,
     String email,
     String password,
+    String img,
   ) async {
     final auth = FirebaseAuth.instance;
     UserCredential credencial = await auth.createUserWithEmailAndPassword(
@@ -35,6 +38,8 @@ class AuthFireBaseService implements AuthService {
     if (credencial.user == null) return;
 
     credencial.user?.updateDisplayName(name);
+    imagem = img;
+    nome = name;
     saveUser();
   }
 
@@ -46,38 +51,20 @@ class AuthFireBaseService implements AuthService {
       email: email,
       password: password,
     );
-    saveUser();
   }
 
   Future<void> logout() async {
     FirebaseAuth.instance.signOut();
   }
 
-  Future<void> saveUser() async{
+  Future<void> saveUser() async {
     String userUid = _currentUser!.id;
     DatabaseReference ref = FirebaseDatabase.instance.ref("users/$userUid");
     await ref.set({
-      "name": _currentUser!.name,
-      "img": 1,
+      "name": nome,
+      "img": imagem,
       "favorites": '',
     });
-
-    //recuperando dados
-    ref.onValue.listen((DatabaseEvent event) {
-      final data = event.snapshot.value;
-      final save = data as List;
-      print(save);
-    });
-      // print(userUid);
-
-    
-      // final snapshot = await ref.get();
-      // if (snapshot.exists) {
-      //     print(snapshot.value);
-      // } else {
-      //     print('No data available.');
-      // };
-
   }
 
   static Usuario _toUsuario(User user) {
@@ -88,8 +75,3 @@ class AuthFireBaseService implements AuthService {
     );
   }
 }
-
-// class DataBaseUser {
-//   uid
-//   void Function(){}
-// }

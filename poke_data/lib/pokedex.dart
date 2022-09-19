@@ -1,9 +1,8 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:poke_data/pokemon_info.dart';
+import 'package:poke_data/principal.dart';
 import 'package:poke_data/search_page.dart';
 import 'package:poke_data/similar.dart';
-import './main.dart';
 import 'package:http/http.dart' as http;
 
 void main() {

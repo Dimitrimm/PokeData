@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import './pokemonButtonMap.dart';
-import './pokemonsPorTime.dart';
+// import './pokemonsPorTime.dart';
 import './search_page.dart';
 
 main() => runApp(novoTeam());
@@ -13,7 +13,7 @@ class novoTeam extends StatefulWidget {
 }
 
 class _novoTeamState extends State<novoTeam> {
-  final time = pokemons;
+  // final time = pokemons;
 
   @override
   Widget build(BuildContext context) {
@@ -74,14 +74,14 @@ class _novoTeamState extends State<novoTeam> {
               ],
             ),
              _AddPokemonTime('Add'),
-            Expanded(
-              child: ListView.builder(
-                itemCount: time.length,
-                itemBuilder: (context, index) {
-                  return PokemonButtonMap(time[index]);
-                },
-              ),
-            )
+            // Expanded(
+              // child: ListView.builder(
+                // itemCount: time.length,
+                // itemBuilder: (context, index) {
+                  // return PokemonButtonMap(time[index]);
+                // },
+              // ),
+            // )
           ],
         ),
       )),

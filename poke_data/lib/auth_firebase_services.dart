@@ -78,9 +78,6 @@ class AuthFireBaseService implements AuthService {
       //     print('No data available.');
       // };
 
-    
-
-
   }
 
   static Usuario _toUsuario(User user) {

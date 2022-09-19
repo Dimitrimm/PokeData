@@ -108,8 +108,8 @@ class _PokedexgetState extends State<Pokedex> {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     IconButton(
-                      onPressed: onPressed,
-                      icon: Icon,
+                      onPressed: (){},
+                      icon: Icon(),
                     ),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.end,

@@ -24,9 +24,9 @@ class Login extends StatefulWidget {
 }
 
 class _MyAppState extends State<Login> {
+  String perfil = 'nenhum';
   final _formKey = GlobalKey<FormState>();
   final _formData = FormData();
-  String perfil = 'nenhum';
 
   void _submit() {
     final isValid = _formKey.currentState?.validate() ?? false;
@@ -119,12 +119,12 @@ class _MyAppState extends State<Login> {
   avatar() {
     homem() {
       perfil = 'h';
-      // _formData.img = perfil;
+      _formData.img = perfil;
       setState(() {});
     }
     mulher() {
       perfil = 'm';
-      // _formData.img = perfil;
+      _formData.img = perfil;
       setState(() {});
     }
     bordah(){

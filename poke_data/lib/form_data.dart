@@ -5,6 +5,7 @@ class FormData {
   String name = "";
   String email = "";
   String password = "";
+  String img = "";
   AuthMode _mode = AuthMode.login;
 
   bool get isLogin{

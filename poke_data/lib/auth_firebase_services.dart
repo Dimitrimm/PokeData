@@ -3,6 +3,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:poke_data/auth_services.dart';
 import 'package:poke_data/usuario.dart';
 import 'dart:async';
+import 'dart:convert';
 
 class AuthFireBaseService implements AuthService {
   static Usuario? _currentUser;
@@ -45,6 +46,7 @@ class AuthFireBaseService implements AuthService {
       email: email,
       password: password,
     );
+    saveUser();
   }
 
   Future<void> logout() async {
@@ -63,8 +65,20 @@ class AuthFireBaseService implements AuthService {
     //recuperando dados
     ref.onValue.listen((DatabaseEvent event) {
       final data = event.snapshot.value;
-      print(data);
+      final save = data as List;
+      print(save);
     });
+      // print(userUid);
+
+    
+      // final snapshot = await ref.get();
+      // if (snapshot.exists) {
+      //     print(snapshot.value);
+      // } else {
+      //     print('No data available.');
+      // };
+
+    
 
 
   }

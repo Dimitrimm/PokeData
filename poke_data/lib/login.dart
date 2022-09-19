@@ -49,7 +49,7 @@ class _MyAppState extends State<Login> {
                     right: 40,
                   ),
                   child: Text(
-                    'Choice your avatar:',
+                    'Choose your avatar:',
                     style: TextStyle(fontSize: 16),
                   ),
                 ),
@@ -116,6 +116,12 @@ class _MyAppState extends State<Login> {
   }
 
   avatar() {
+    final escolha = 0;
+    troca(){
+      if (escolha == 0){
+        
+      }
+    }
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [

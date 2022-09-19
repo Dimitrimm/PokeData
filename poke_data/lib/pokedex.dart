@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:poke_data/principal.dart';
@@ -76,10 +77,9 @@ class _PokedexgetState extends State<Pokedex> {
     }
   }
 
-
   //CARD
   createCard(pokemon, favorites) {
-    
+
     salvar(id) {
       final ref = FirebaseDatabase.instance.ref('users/${id}/favorites');
       ref.update(
@@ -89,44 +89,37 @@ class _PokedexgetState extends State<Pokedex> {
       );
     }
 
-
-    _isFavotire(data){
-      print(data.runtimeType);
-
-      if(data){
-       return IconButton(
-         icon: const Icon(Icons.star), //_isFavotire(userData['favorites'][pokemon['id']] ) ,
-         color: Colors.yellow,
-         onPressed: () {
-           salvar(userID);
-           print('executei');  
-           setState(() {
-             
-           });
-         },
-         iconSize: 30,
-       );
-      }else{
-        return IconButton(
-         icon: const Icon(Icons.star_border), //_isFavotire(userData['favorites'][pokemon['id']] ) ,
-         color: null,
-         onPressed: () {
-            salvar(userID);
-            print('executei');  
-           setState(() {
-            
-           });
-         },
-         iconSize: 30,
-       );
-      }
-       
+    desfavoritar(id) {
+      final ref = FirebaseDatabase.instance.ref('users/${id}/favorites');
+      ref.update(
+        {
+          pokemon['id']: '',
+        },
+      );
     }
-    _isCu(data){
-      if(data){
-        return _isFavotire(data);
-      }else{
-        return _isFavotire('');
+
+    _isFavotire(data) {
+      if (data != null || data == "") {
+        return IconButton(
+          icon: const Icon(Icons
+              .star), //_isFavotire(userData['favorites'][pokemon['id']] ) ,
+          color: Colors.yellow,
+          onPressed: () {
+            desfavoritar(userID);
+            print('executei');
+          },
+          iconSize: 30,
+        );
+      } else {
+        return IconButton(
+          icon: const Icon(Icons
+              .star_border), //_isFavotire(userData['favorites'][pokemon['id']] ) ,
+          color: null,
+          onPressed: () {
+            salvar(userID);
+          },
+          iconSize: 30,
+        );
       }
     }
 
@@ -147,7 +140,7 @@ class _PokedexgetState extends State<Pokedex> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    _isCu(userData['favorites'][pokemon['id']]),
+                    _isFavotire(userData['favorites'][pokemon['id']]),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.end,
                       mainAxisAlignment: MainAxisAlignment.start,

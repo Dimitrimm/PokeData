@@ -46,6 +46,9 @@ class _PrincipalState extends State<Principal> {
     final ref = FirebaseDatabase.instance.ref('users/${id}/name');
     final snapshot = await ref.get();
       if (snapshot.exists) {
+        setState(() {
+          
+        });
           userData = snapshot.value;
           // print(userData);
           // print('userdata');
@@ -57,6 +60,9 @@ class _PrincipalState extends State<Principal> {
     final ref = FirebaseDatabase.instance.ref('users/${id}/img');
     final snapshot = await ref.get();
       if (snapshot.exists) {
+        setState(() {
+          
+        });
           userImg = snapshot.value;
           // print(userImg);
           // print('userImg');

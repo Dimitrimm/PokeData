@@ -93,13 +93,13 @@ class _PokedexgetState extends State<Pokedex> {
       final ref = FirebaseDatabase.instance.ref('users/${id}/favorites');
       ref.update(
         {
-          pokemon['id']: '',
+          pokemon['id']: null,
         },
       );
     }
 
     _isFavotire(data) {
-      if (data != null || data == "") {
+      if (data != null) {
         return IconButton(
           icon: const Icon(Icons
               .star), //_isFavotire(userData['favorites'][pokemon['id']] ) ,

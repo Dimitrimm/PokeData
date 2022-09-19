@@ -76,9 +76,10 @@ class _PokedexgetState extends State<Pokedex> {
     }
   }
 
-  createCard(pokemon, favorites) {
-    final ja_salvo = salvos.contains(pokemon);
 
+  //CARD
+  createCard(pokemon, favorites) {
+    
     salvar(id) {
       final ref = FirebaseDatabase.instance.ref('users/${id}/favorites');
       ref.update(
@@ -86,6 +87,47 @@ class _PokedexgetState extends State<Pokedex> {
           pokemon['id']: pokemon['name'],
         },
       );
+    }
+
+
+    _isFavotire(data){
+      print(data.runtimeType);
+
+      if(data){
+       return IconButton(
+         icon: const Icon(Icons.star), //_isFavotire(userData['favorites'][pokemon['id']] ) ,
+         color: Colors.yellow,
+         onPressed: () {
+           salvar(userID);
+           print('executei');  
+           setState(() {
+             
+           });
+         },
+         iconSize: 30,
+       );
+      }else{
+        return IconButton(
+         icon: const Icon(Icons.star_border), //_isFavotire(userData['favorites'][pokemon['id']] ) ,
+         color: null,
+         onPressed: () {
+            salvar(userID);
+            print('executei');  
+           setState(() {
+            
+           });
+         },
+         iconSize: 30,
+       );
+      }
+       
+    }
+    _isCu(data){
+      if(data){
+        return _isFavotire(data);
+      }else{
+        return _isFavotire('');
+      }
     }
 
     //  onPressed: () => Navigator.of(context).pushReplacement(
@@ -105,26 +147,7 @@ class _PokedexgetState extends State<Pokedex> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    IconButton(
-                      icon: ja_salvo
-                          ? const Icon(Icons.star)
-                          : const Icon(Icons.star_border),
-                      color: ja_salvo ? Colors.yellow : null,
-                      onPressed: () {
-                        setState(() {
-                          if (ja_salvo) {
-                            salvos.remove(pokemon);
-
-                            print(userData['favorites']);
-                            print(userID);
-                          } else {
-                            salvos.add(pokemon);
-                            salvar(userID);
-                          }
-                        });
-                      },
-                      iconSize: 30,
-                    ),
+                    _isCu(userData['favorites'][pokemon['id']]),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.end,
                       mainAxisAlignment: MainAxisAlignment.start,

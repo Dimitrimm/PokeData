@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:poke_data/similar.dart';
 
 class PokemonButtonMap extends StatelessWidget {
-  final Map<String, String> pikomons;
+  final Map pikomons;
 
   const PokemonButtonMap(this.pikomons, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        // colocar o path da tela pokeInfo
-      },
+      onTap:()=> Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (context) =>  Similar(pokemonId:pikomons['id'] ),)
+       ),
       child: Padding(
         padding: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 10.0),
         child: Container(
@@ -35,8 +36,8 @@ class PokemonButtonMap extends StatelessWidget {
                 children: [
                   Container(
                     padding: const EdgeInsets.fromLTRB(15.0, 0.0, 15.0, 0.0),
-                    child: Image.asset(
-                      'assets/images/${pikomons['pokedexNumber']}.png',
+                    child: Image.network(
+                      'https://raw.githubusercontent.com/Dimitrimm/pokemonAssets/master/${pikomons["img"]}.png',
                       width: 56,
                       height: 56,
                     ),
@@ -53,7 +54,7 @@ class PokemonButtonMap extends StatelessWidget {
                             color: Colors.black),
                         textAlign: TextAlign.left,
                       ),
-                      Text(pikomons['type'].toString(),
+                      Text(pikomons['typing'].toString(),
                           style: const TextStyle(
                               fontSize: 12,
                               fontWeight: FontWeight.normal,
@@ -66,7 +67,7 @@ class PokemonButtonMap extends StatelessWidget {
               Padding(
                   padding: const EdgeInsets.fromLTRB(0.0, 0.0, 16.0, 0.0),
                   child: Text(
-                      '#${_dexNumber(pikomons['pokedexNumber'].toString())}')),
+                      '#${_dexNumber(pikomons['pokedex_number'].toString())}')),
             ],
           ),
         ),

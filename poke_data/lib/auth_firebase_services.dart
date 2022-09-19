@@ -63,11 +63,11 @@ class AuthFireBaseService implements AuthService {
     });
 
     //recuperando dados
-    ref.onValue.listen((DatabaseEvent event) {
-      final data = event.snapshot.value;
-      final save = data as List;
-      print(save);
-    });
+    // ref.onValue.listen((DatabaseEvent event) {
+    //   final data = event.snapshot.value;
+    //   final save = data as List;
+    //   print(save);
+    // });
       // print(userUid);
 
     

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:poke_data/pokemon_info.dart';
 import 'package:poke_data/search_page.dart';
@@ -6,6 +7,9 @@ import 'package:poke_data/similar.dart';
 import './main.dart';
 import 'package:http/http.dart' as http;
 import 'package:poke_data/principal.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
+
 void main() {
   runApp(
     const MaterialApp(
@@ -22,6 +26,40 @@ class Pokedex extends StatefulWidget {
 }
 
 class _PokedexgetState extends State<Pokedex> {
+
+  var userID;
+  var userData;
+
+  @override
+  void initState (){
+    super.initState();
+    FirebaseAuth.instance
+      .authStateChanges()
+      .listen((User? user) {
+      if (user == null) {
+        print('User is currently signed out!');
+      } else {
+        userID = user.uid;
+        _getUserData(user.uid);
+      }
+    });
+  }
+
+  _getUserData(id)async {
+    print('gfetUserData USerID'+userID);
+    final ref = FirebaseDatabase.instance.ref('users/${id}');
+    final snapshot = await ref.get();
+      if (snapshot.exists) {
+        setState(() {
+          userData = snapshot.value;
+        });
+        print(userData);
+      } else {
+        print('No data available.');
+      }
+
+  }
+
   final salvos = [];
 
   _dexNumber(String id) {
@@ -44,33 +82,6 @@ class _PokedexgetState extends State<Pokedex> {
     }
   }
 
-  final List<int> teste = [
-    1,
-    2,
-    3,
-    4,
-    5,
-    6,
-    7,
-    8,
-    9,
-    10,
-    11,
-    12,
-    13,
-    14,
-    15,
-    16,
-    17,
-    18,
-    19,
-    20,
-    21,
-    22,
-    23,
-    24,
-    25
-  ];
 
   createCard(pokemon) {
 
@@ -91,7 +102,7 @@ class _PokedexgetState extends State<Pokedex> {
                     title: Ink(
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.end,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           IconButton(
                             icon: ja_salvo

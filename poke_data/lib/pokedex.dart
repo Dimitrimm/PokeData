@@ -4,7 +4,7 @@ import 'package:poke_data/pokemon_info.dart';
 import 'package:poke_data/search_page.dart';
 import './main.dart';
 import 'package:http/http.dart' as http;
-
+import 'package:poke_data/principal.dart';
 void main() {
   runApp(
     const MaterialApp(

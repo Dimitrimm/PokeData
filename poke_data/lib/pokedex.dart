@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:poke_data/pokemon_info.dart';
 import 'package:poke_data/search_page.dart';
+import 'package:poke_data/similar.dart';
 import './main.dart';
 import 'package:http/http.dart' as http;
 
@@ -22,6 +23,15 @@ class Pokedex extends StatefulWidget {
 
 class _PokedexgetState extends State<Pokedex> {
   final salvos = [];
+
+  _dexNumber(String id) {
+    if (id.length == 1) {
+      id = '00$id';
+    } else if (id.length == 2) {
+      id = ('0$id');
+    }
+    return id;
+  }
 
   Future<List> fetch() async {
     var url = Uri.parse('http://10.0.2.2:5000/allpokemons');
@@ -72,7 +82,7 @@ class _PokedexgetState extends State<Pokedex> {
 
     return InkWell(
        onTap:()=> Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => const PokemonInfo(/*passar o parâmetro para tela de dimas pokemon['pokedex_number'],*/),)
+        MaterialPageRoute(builder: (context) =>  Similar(pokemonId:pokemon['id'] ),)
        ) ,
        child:Card(
           child: Column(
@@ -104,7 +114,7 @@ class _PokedexgetState extends State<Pokedex> {
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               Text(pokemon['name']),
-                              Text("#${pokemon['pokedex_number']}"),
+                              Text("#${_dexNumber(pokemon['pokedex_number'].toString())}"),
                             ],
                           ),
                         ],

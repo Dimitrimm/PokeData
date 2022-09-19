@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:poke_data/principal.dart';
 import 'package:poke_data/versus_page.dart';
 import 'main.dart';
 import './search_page.dart';

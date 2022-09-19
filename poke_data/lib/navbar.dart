@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:poke_data/principal.dart';
 import 'package:poke_data/search_page.dart';
 import 'main.dart';
 import 'versus_page.dart';
@@ -28,10 +29,7 @@ class _NavbarState extends State<Navbar> {
   
   void onTabTapped(int index) {
     setState(() {
-
-      indiceAtual = index;
-
-      Navigator.push(context, MaterialPageRoute(builder: (context) => TelaPrincipal(indiceAtual)));
+      Navigator.push(context, MaterialPageRoute(builder: (context) => TelaPrincipal()));
 
     });
   }

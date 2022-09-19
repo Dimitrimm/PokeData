@@ -95,7 +95,7 @@ class _CadastroState extends State<Cadastro> {
                     child: SizedBox.expand(
                       child: TextButton(
                         onPressed: (() => Navigator.push(context,
-                            MaterialPageRoute(builder: (context) => Login()))),
+                            MaterialPageRoute(builder: (context) => Login(onSubmit: (_){},)))),
                         child: Text(
                           'Sign up',
                           style: TextStyle(

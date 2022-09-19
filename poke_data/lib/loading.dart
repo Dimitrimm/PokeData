@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const Loading());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+class Loading extends StatelessWidget {
+  const Loading({Key? key}) : super(key: key);
 
 
   @override
@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
             children: [
               const Text("PokeData", style: TextStyle(fontSize: 36),),
               const SizedBox(height: 10,),
-              Image.asset('images/pokebola.png', width: 300,)
+              Image.asset('assets/images/pokebola.png', width: 300,)
           ],)
         ),
       ),

@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:poke_data/pokemon_info.dart';
 import 'package:poke_data/principal.dart';
 import 'package:poke_data/search_page.dart';
 import 'package:poke_data/similar.dart';
@@ -26,8 +27,6 @@ class _PokedexgetState extends State<Pokedex> {
   var userID;
   var userData;
   var request;
-  List<String> favoritesPokemon = [];
-  var poke = 1;
 
   @override
   void initState() {
@@ -56,8 +55,6 @@ class _PokedexgetState extends State<Pokedex> {
     }
   }
 
-  final salvos = [];
-
   _dexNumber(String id) {
     if (id.length == 1) {
       id = '00$id';
@@ -76,6 +73,7 @@ class _PokedexgetState extends State<Pokedex> {
       return throw Exception("Error ao conectar-se ao servidor");
     }
   }
+
   salvar(pokemon, id) {
     final ref = FirebaseDatabase.instance.ref('users/${id}/favorites');
     ref.update(
@@ -85,53 +83,20 @@ class _PokedexgetState extends State<Pokedex> {
     );
   }
 
+  desfavoritar(pokemon, id) {
+    final ref = FirebaseDatabase.instance.ref('users/${id}/favorites');
+    ref.update(
+      {
+        pokemon['id']: null,
+      },
+    );
+  }
+
   //CARD
-  createCard(pokemon, favorites) {
-
-
-
-    desfavoritar(id) {
-      final ref = FirebaseDatabase.instance.ref('users/${id}/favorites');
-      ref.update(
-        {
-          pokemon['id']: null,
-        },
-      );
-    }
-
-    _isFavotire(data) {
-      if (data != null) {
-        return IconButton(
-          icon: const Icon(Icons
-              .star), //_isFavotire(userData['favorites'][pokemon['id']] ) ,
-          color: Colors.yellow,
-          onPressed: () {
-            desfavoritar(userID);
-            print('executei');
-          },
-          iconSize: 30,
-        );
-      } else {
-        return IconButton(
-          icon: const Icon(Icons
-              .star_border), //_isFavotire(userData['favorites'][pokemon['id']] ) ,
-          color: null,
-          onPressed: () {
-            salvar(pokemon, userID);
-          },
-          iconSize: 30,
-        );
-      }
-    }
-
-    nulo(){
-
-    }
-
-    
+  Widget createCard(pokemon, favorites) {
     return InkWell(
       onTap: () => Navigator.of(context).pushReplacement(MaterialPageRoute(
-        builder: (context) => Similar(pokemonId: pokemon['id']),
+        builder: (context) => PokemonInfo(),
       )),
       child: Card(
         child: Column(
@@ -139,10 +104,13 @@ class _PokedexgetState extends State<Pokedex> {
             ListTile(
               title: Ink(
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    _isFavotire(userData['favorites'][pokemon['id']]),
+                    IconButton(
+                      onPressed: onPressed,
+                      icon: Icon,
+                    ),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.end,
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -167,95 +135,109 @@ class _PokedexgetState extends State<Pokedex> {
     );
   }
 
+  Widget _body(context) {
+    return Column(
+      children: [
+        _topButtons(),
+        _pokedexIcon(),
+        _futureBuilder(),
+      ],
+    );
+  }
+
+  Widget _topButtons() {
+    return Padding(
+      padding: const EdgeInsets.only(top: 60),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Container(
+            padding: const EdgeInsets.only(left: 21),
+            alignment: Alignment.topLeft,
+            child: IconButton(
+              onPressed: () => Navigator.of(context).pushReplacement(
+                MaterialPageRoute(builder: (context) => const Principal()),
+              ),
+              icon: const Icon(
+                Icons.arrow_back_ios_outlined,
+                size: 18.0,
+              ),
+            ),
+          ),
+          Container(
+            padding: const EdgeInsets.only(right: 21),
+            alignment: Alignment.topRight,
+            child: IconButton(
+              icon: const Icon(
+                Icons.search,
+                size: 35,
+              ),
+              onPressed: (() => Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const Search()))),
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget _pokedexIcon() {
+    return Container(
+      child: Column(
+        children: [
+          Image.asset(
+            'assets/images/pokedex.png',
+            width: 100,
+            height: 100,
+          ),
+          const Padding(
+            padding: EdgeInsets.all(5.0),
+            child: Text(
+              "Pokedex",
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _futureBuilder() {
+    return Expanded(
+      child: FutureBuilder<List>(
+        future: request,
+        builder: (context, snapshot) {
+          if (snapshot.hasError) {
+            return const Center(
+              child: Text("Erro ao carregar os pokémons"),
+            );
+          }
+
+          if (snapshot.hasData) {
+            return GridView.builder(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                ),
+                itemCount: snapshot.data!.length,
+                itemBuilder: (context, index) {
+                  final item = snapshot.data![index];
+
+                  return createCard(item, userData);
+                });
+          }
+
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        },
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        home: Scaffold(
-      body: Container(
-        padding: const EdgeInsets.only(top: 60),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                  padding: const EdgeInsets.only(left: 21),
-                  alignment: Alignment.topLeft,
-                  child: IconButton(
-                      onPressed: () => Navigator.of(context).pushReplacement(
-                            MaterialPageRoute(
-                                builder: (context) => const Principal()),
-                          ),
-                      icon: const Icon(
-                        Icons.arrow_back_ios_outlined,
-                        size: 18.0,
-                      )),
-                ),
-                Container(
-                  padding: const EdgeInsets.only(right: 21),
-                  alignment: Alignment.topRight,
-                  child: IconButton(
-                    icon: const Icon(
-                      Icons.search,
-                      size: 35,
-                    ),
-                    onPressed: (() => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const Search()))),
-                  ),
-                )
-              ],
-            ),
-
-            Padding(
-              padding: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
-              child: Image.asset(
-                'assets/images/pokedex.png',
-                width: 100,
-                height: 100,
-              ),
-            ),
-            const Padding(
-                padding: EdgeInsets.all(5.0),
-                child: Text("Pokedex",
-                    style:
-                        TextStyle(fontSize: 24, fontWeight: FontWeight.bold))),
-            // Expanded(child:buildListView()),
-            Expanded(
-              child: FutureBuilder<List>(
-                future: request,
-                builder: (context, snapshot) {
-                  if (snapshot.hasError) {
-                    return const Center(
-                      child: Text("Erro ao carregar os pokémons"),
-                    );
-                  }
-
-                  if (snapshot.hasData) {
-                    return GridView.builder(
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                        ),
-                        itemCount: snapshot.data!.length,
-                        itemBuilder: (context, index) {
-                          final item = snapshot.data![index];
-
-                          return createCard(item, userData);
-                        });
-                  }
-
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                },
-              ),
-            )
-          ],
-        ),
-      ),
-    ));
+    return Scaffold(
+      body: _body(context),
+    );
   }
 }

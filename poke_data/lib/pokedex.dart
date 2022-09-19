@@ -193,9 +193,11 @@ class _PokedexgetState extends State<Pokedex> {
             padding: const EdgeInsets.only(left: 21),
             alignment: Alignment.topLeft,
             child: IconButton(
-              onPressed: () => Navigator.of(context).pushReplacement(
-                MaterialPageRoute(builder: (context) => const Principal()),
-              ),
+              onPressed: () {
+                Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(builder: (context) => const Principal()),
+                );
+              },
               icon: const Icon(
                 Icons.arrow_back_ios_outlined,
                 size: 18.0,

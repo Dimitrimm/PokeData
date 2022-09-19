@@ -64,6 +64,7 @@ class AuthFireBaseService implements AuthService {
       "name": nome,
       "img": imagem,
       "favorites": {
+        "idP":"pokemon"
       },
     });
 

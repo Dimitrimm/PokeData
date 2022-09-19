@@ -76,18 +76,19 @@ class _PokedexgetState extends State<Pokedex> {
       return throw Exception("Error ao conectar-se ao servidor");
     }
   }
+  salvar(pokemon, id) {
+    final ref = FirebaseDatabase.instance.ref('users/${id}/favorites');
+    ref.update(
+      {
+        pokemon['id']: pokemon['name'],
+      },
+    );
+  }
 
   //CARD
   createCard(pokemon, favorites) {
 
-    salvar(id) {
-      final ref = FirebaseDatabase.instance.ref('users/${id}/favorites');
-      ref.update(
-        {
-          pokemon['id']: pokemon['name'],
-        },
-      );
-    }
+
 
     desfavoritar(id) {
       final ref = FirebaseDatabase.instance.ref('users/${id}/favorites');
@@ -116,17 +117,18 @@ class _PokedexgetState extends State<Pokedex> {
               .star_border), //_isFavotire(userData['favorites'][pokemon['id']] ) ,
           color: null,
           onPressed: () {
-            salvar(userID);
+            salvar(pokemon, userID);
           },
           iconSize: 30,
         );
       }
     }
 
-    //  onPressed: () => Navigator.of(context).pushReplacement(
-    // MaterialPageRoute(builder: (context) => const Principal()),
-    // ),
+    nulo(){
 
+    }
+
+    
     return InkWell(
       onTap: () => Navigator.of(context).pushReplacement(MaterialPageRoute(
         builder: (context) => Similar(pokemonId: pokemon['id']),

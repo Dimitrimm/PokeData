@@ -26,6 +26,7 @@ class _PokedexgetState extends State<Pokedex> {
   var userData;
   var request;
   List<String> favoritesPokemon = [];
+  var poke = 1;
 
   @override
   void initState() {
@@ -41,16 +42,14 @@ class _PokedexgetState extends State<Pokedex> {
     });
   }
 
-
   _getUserData(id) async {
     print('gfetUserData USerID' + userID);
     final ref = FirebaseDatabase.instance.ref('users/${id}');
     final snapshot = await ref.get();
     if (snapshot.exists) {
       setState(() {
-        userData =snapshot.value;
+        userData = snapshot.value;
       });
-        
     } else {
       print('No data available.');
     }
@@ -80,6 +79,15 @@ class _PokedexgetState extends State<Pokedex> {
   createCard(pokemon, favorites) {
     final ja_salvo = salvos.contains(pokemon);
 
+    salvar(id) {
+      final ref = FirebaseDatabase.instance.ref('users/${id}/favorites');
+      ref.update(
+        {
+          pokemon['id']: pokemon['name'],
+        },
+      );
+    }
+
     //  onPressed: () => Navigator.of(context).pushReplacement(
     // MaterialPageRoute(builder: (context) => const Principal()),
     // ),
@@ -106,10 +114,12 @@ class _PokedexgetState extends State<Pokedex> {
                         setState(() {
                           if (ja_salvo) {
                             salvos.remove(pokemon);
+
                             print(userData['favorites']);
                             print(userID);
                           } else {
                             salvos.add(pokemon);
+                            salvar(userID);
                           }
                         });
                       },
@@ -172,8 +182,10 @@ class _PokedexgetState extends State<Pokedex> {
                       Icons.search,
                       size: 35,
                     ),
-                    onPressed: (() => Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => const Search()))),
+                    onPressed: (() => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const Search()))),
                   ),
                 )
               ],

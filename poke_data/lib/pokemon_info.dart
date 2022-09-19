@@ -1,13 +1,27 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/percent_indicator.dart';
+import 'package:http/http.dart' as http;
 
 class PokemonInfo extends StatefulWidget {
-  const PokemonInfo({Key? key}) : super(key: key);
+  String pokemonId;
+
+  PokemonInfo({Key? key, required this.pokemonId}) : super(key: key);
   @override
   State<PokemonInfo> createState() => _PokemonInfoState();
 }
 
 class _PokemonInfoState extends State<PokemonInfo> {
+  final String host = 'http://localhost:5000';
+  final String endAllPokemonInfo = '/alldataofpokemon/';
+  final String endAllAdvantageInfo = '/alladvantageofpokemon/';
+  final String endAllWeaknessInfo = '/alladvantageofpokemon/';
+
+  late Map<dynamic, dynamic> allInfoMap;
+  late Map<dynamic, dynamic> allAdvantageMap;
+  late Map<dynamic, dynamic> allWeaknessMap;
+
   String pokemonName = "Pikachu";
   String pokemonType = "Mouse Pokémon";
   String weight = '100KG';
@@ -24,39 +38,43 @@ class _PokemonInfoState extends State<PokemonInfo> {
   }
 
   Widget _body(context) {
-    return SingleChildScrollView(
-        child: Padding(
-            padding:
-                const EdgeInsets.only(top: 42, left: 22, right: 22, bottom: 22),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                _actionButtonRow(),
-                Text(
-                  pokemonName,
-                  style: const TextStyle(
-                      fontSize: 25, fontWeight: FontWeight.bold),
-                ),
-                Text(
-                  pokemonType,
-                  style: const TextStyle(fontSize: 15),
-                ),
-                _pokemonAssetsCard(),
-                _typeRow(types),
-                _featuresRow(weight, color, height),
-                _featureFieldName('Base Status'),
-                _baseStatus(),
-                _featureFieldName('Special Status'),
-                _specialStatus(),
-                _commonFieldName('Abilities:'),
-                _abilitiesRow(abilities),
-                _commonFieldName('Weakness:'),
-                _typeFeaturesRow(),
-                _commonFieldName('Advantage:'),
-                _typeFeaturesRow(),
-                _formFeaturesRow(),
-              ],
-            )));
+    if (fetch() == true) {
+      return SingleChildScrollView(
+          child: Padding(
+              padding: const EdgeInsets.only(
+                  top: 42, left: 22, right: 22, bottom: 22),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  _actionButtonRow(),
+                  Text(
+                    pokemonName,
+                    style: const TextStyle(
+                        fontSize: 25, fontWeight: FontWeight.bold),
+                  ),
+                  Text(
+                    pokemonType,
+                    style: const TextStyle(fontSize: 15),
+                  ),
+                  _pokemonAssetsCard(),
+                  _typeRow(types),
+                  _featuresRow(weight, color, height),
+                  _featureFieldName('Base Status'),
+                  _baseStatus(),
+                  _featureFieldName('Special Status'),
+                  _specialStatus(),
+                  _commonFieldName('Abilities:'),
+                  _abilitiesRow(abilities),
+                  _commonFieldName('Weakness:'),
+                  _typeFeaturesRow(),
+                  _commonFieldName('Advantage:'),
+                  _typeFeaturesRow(),
+                  _formFeaturesRow(),
+                ],
+              )));
+    } else {
+      return Text('não foi possível carregar os dados!');
+    }
   }
 
   Widget _baseStatus() {
@@ -268,6 +286,46 @@ class _PokemonInfoState extends State<PokemonInfo> {
     return Padding(
         padding: const EdgeInsets.only(top: 10),
         child: SizedBox(width: double.infinity, child: Text(name)));
+  }
+
+  fetchAllPokemonInfo(client, id) async {
+    var response = await client.get(Uri.parse(host + endAllPokemonInfo + id));
+    if (response.statusCode == 200) {
+      return jsonDecode(utf8.decode(response.bodyBytes)) as Map;
+    } else {
+      throw Exception("Error ao conectar-se ao servidor");
+    }
+  }
+
+  fetchAllWeaknessInfo(client, id) async {
+    var response = await client.get(Uri.parse(host + endAllWeaknessInfo + id));
+    if (response.statusCode == 200) {
+      return jsonDecode(utf8.decode(response.bodyBytes)) as Map;
+    } else {
+      throw Exception("Error ao conectar-se ao servidor");
+    }
+  }
+
+  fetchAllAdvantageInfo(client, id) async {
+    var response = await client.get(Uri.parse(host + endAllAdvantageInfo + id));
+    if (response.statusCode == 200) {
+      return jsonDecode(utf8.decode(response.bodyBytes)) as Map;
+    } else {
+      throw Exception("Error ao conectar-se ao servidor");
+    }
+  }
+
+  fetch() {
+    var client = http.Client;
+    String id = widget.pokemonId;
+    try {
+      allInfoMap = fetchAllPokemonInfo(client, id);
+      allAdvantageMap = fetchAllAdvantageInfo(client, id);
+      allWeaknessMap = fetchAllWeaknessInfo(client, id);
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 
   void goBack() {}

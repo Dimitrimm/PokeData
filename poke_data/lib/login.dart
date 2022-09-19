@@ -17,7 +17,7 @@ class Login extends StatefulWidget {
   const Login({
     Key? key,
     required this.onSubmit,
-    }) : super(key: key);
+  }) : super(key: key);
 
   @override
   State<Login> createState() => _MyAppState();
@@ -26,8 +26,9 @@ class Login extends StatefulWidget {
 class _MyAppState extends State<Login> {
   final _formKey = GlobalKey<FormState>();
   final _formData = FormData();
+  String perfil = 'nenhum';
 
-  void _submit(){
+  void _submit() {
     final isValid = _formKey.currentState?.validate() ?? false;
     if (!isValid) return;
 
@@ -37,102 +38,123 @@ class _MyAppState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-            body: ListView(
-          children: [
-            SizedBox(height: 10),
-            body(),
-            Column(children: [
-              if (_formData.isSignup)
-                Padding(
-                  padding: const EdgeInsets.only(
-                    left: 40,
-                    right: 40,
-                  ),
+      body: ListView(
+        children: [
+          SizedBox(height: 10),
+          body(),
+          Column(children: [
+            if (_formData.isSignup)
+              Padding(
+                padding: const EdgeInsets.only(
+                  left: 40,
+                  right: 40,
+                ),
+                child: Text(
+                  'Choose your avatar:',
+                  style: TextStyle(fontSize: 16),
+                ),
+              ),
+            if (_formData.isSignup) avatar(),
+            Container(
+              height: 40,
+              width: 100,
+              // alignment: Alignment.center,
+              decoration: const BoxDecoration(
+                color: Colors.red,
+                borderRadius: BorderRadius.all(
+                  Radius.circular(20),
+                ),
+              ),
+              child: SizedBox.expand(
+                child: TextButton(
+                  onPressed: (() {
+                    _submit();
+                  }),
                   child: Text(
-                    'Choose your avatar:',
-                    style: TextStyle(fontSize: 16),
+                    _formData.isLogin ? 'Sign in' : 'Sign up',
+                    style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white),
                   ),
                 ),
-              if (_formData.isSignup) avatar(),
-              Container(
-                height: 40,
-                width: 100,
-                // alignment: Alignment.center,
-                decoration: const BoxDecoration(
+              ),
+            ),
+            SizedBox(height: 10),
+            Center(
+              child: Text("Or", style: TextStyle(fontSize: 16)),
+            ),
+            const SizedBox(height: 10),
+            Container(
+              width: 100,
+              height: 40,
+              decoration: const BoxDecoration(
                   color: Colors.red,
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(20),
-                  ),
-                ),
-                child: SizedBox.expand(
-                  child: TextButton(
-                    onPressed: (() {
-                      _submit();
-                    }),
+                  borderRadius: BorderRadius.all(Radius.circular(20))),
+              alignment: Alignment.center,
+              child: SizedBox.expand(
+                child: TextButton(
+                    onPressed: (() => setState(() {
+                          _formData.toggleMode();
+                        })),
+                    // Navigator.push(
+                    //     context,
+                    //     MaterialPageRoute(
+                    //         builder: (context) => Cadastro()))),
                     child: Text(
-                      _formData.isLogin ? 'Sign in' : 'Sign up',
+                      _formData.isLogin ? 'Sign up' : 'Login page',
                       style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
                           color: Colors.white),
-                    ),
-                  ),
-                ),
+                    )),
               ),
-              SizedBox(height: 10),
-              Center(
-                child: Text("Or", style: TextStyle(fontSize: 16)),
-              ),
-              const SizedBox(height: 10),
-              Container(
-                width: 100,
-                height: 40,
-                decoration: const BoxDecoration(
-                    color: Colors.red,
-                    borderRadius: BorderRadius.all(Radius.circular(20))),
-                alignment: Alignment.center,
-                child: SizedBox.expand(
-                  child: TextButton(
-                      onPressed: (() => setState(() {
-                            _formData.toggleMode();
-                          })),
-                      // Navigator.push(
-                      //     context,
-                      //     MaterialPageRoute(
-                      //         builder: (context) => Cadastro()))),
-                      child: Text(
-                        _formData.isLogin ? 'Sign up' : 'Login page',
-                        style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white),
-                      )),
-                ),
-              ),
-            ]),
-          ],
-        ),
+            ),
+          ]),
+        ],
+      ),
     );
   }
 
   avatar() {
-    final escolha = 0;
-    troca(){
-      if (escolha == 0){
-        
+    homem() {
+      perfil = 'h';
+      // _formData.img = perfil;
+      setState(() {});
+    }
+    mulher() {
+      perfil = 'm';
+      // _formData.img = perfil;
+      setState(() {});
+    }
+    bordah(){
+      if (perfil == 'h'){
+        return BoxDecoration(
+              border: Border.all(color: Colors.blueAccent));
       }
     }
+    bordam(){
+      if (perfil == 'm'){
+        return BoxDecoration(
+              border: Border.all(color: Colors.blueAccent));
+      }
+    }
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         TextButton(
-            onPressed: () {},
+            onPressed: () => homem(),
             child: Container(
-                width: 80, child: Image.asset('assets/images/jogador.png'))),
+                decoration: bordah(),
+                width: 80, 
+                child: Image.asset('assets/images/jogador.png'))),
         TextButton(
-            onPressed: () {},
+            onPressed: () => mulher(),
             child: Container(
-                width: 80, child: Image.asset('assets/images/jogadora.png')))
+                decoration: bordam(),
+                width: 80, 
+                child: Image.asset('assets/images/jogadora.png')))
       ],
     );
   }
@@ -157,7 +179,7 @@ class _MyAppState extends State<Login> {
             )),
         validator: (_email) {
           final email = _email ?? '';
-          if (!email.contains('@')){
+          if (!email.contains('@')) {
             return 'This is not a valid email address';
           }
           return null;
@@ -188,7 +210,7 @@ class _MyAppState extends State<Login> {
             )),
         validator: (_password) {
           final password = _password ?? '';
-          if (password.length < 6){
+          if (password.length < 6) {
             return 'Pasword must be at least 6 characters long';
           }
           return null;
@@ -240,17 +262,17 @@ class _MyAppState extends State<Login> {
           key: _formKey,
           child: Column(
             children: [
-        if (_formData.isSignup) userField(),
-        SizedBox(height: 10),
-        user_emailField(),
-        SizedBox(
-          height: 10,
-        ),
-        passwordField(),
-        const SizedBox(height: 30),
-
+              if (_formData.isSignup) userField(),
+              SizedBox(height: 10),
+              user_emailField(),
+              SizedBox(
+                height: 10,
+              ),
+              passwordField(),
+              const SizedBox(height: 30),
             ],
-        ),)
+          ),
+        )
       ],
     );
   }

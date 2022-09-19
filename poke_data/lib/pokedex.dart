@@ -9,13 +9,10 @@ import 'package:http/http.dart' as http;
 import 'package:poke_data/principal.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-
 void main() {
-  runApp(
-    const MaterialApp(
-      home: Pokedex(),
-    )
-  );
+  runApp(const MaterialApp(
+    home: Pokedex(),
+  ));
 }
 
 class Pokedex extends StatefulWidget {
@@ -26,16 +23,16 @@ class Pokedex extends StatefulWidget {
 }
 
 class _PokedexgetState extends State<Pokedex> {
-
   var userID;
   var userData;
+  var request;
+  List<String> favoritesPokemon = [];
 
   @override
-  void initState (){
+  void initState() {
+    request = fetch();
     super.initState();
-    FirebaseAuth.instance
-      .authStateChanges()
-      .listen((User? user) {
+    FirebaseAuth.instance.authStateChanges().listen((User? user) {
       if (user == null) {
         print('User is currently signed out!');
       } else {
@@ -45,19 +42,15 @@ class _PokedexgetState extends State<Pokedex> {
     });
   }
 
-  _getUserData(id)async {
-    print('gfetUserData USerID'+userID);
-    final ref = FirebaseDatabase.instance.ref('users/${id}');
+  _getUserData(id) async {
+    print('gfetUserData USerID' + userID);
+    final ref = FirebaseDatabase.instance.ref('users/${id}/favorites');
     final snapshot = await ref.get();
-      if (snapshot.exists) {
-        setState(() {
-          userData = snapshot.value;
-        });
-        print(userData);
-      } else {
-        print('No data available.');
-      }
-
+    if (snapshot.exists) {
+        userData = snapshot.value;
+    } else {
+      print('No data available.');
+    }
   }
 
   final salvos = [];
@@ -76,70 +69,69 @@ class _PokedexgetState extends State<Pokedex> {
     var response = await http.get(url);
     if (response.statusCode == 200) {
       return jsonDecode(utf8.decode(response.bodyBytes));
-
     } else {
       return throw Exception("Error ao conectar-se ao servidor");
     }
   }
 
-
-  createCard(pokemon) {
-
+  createCard(pokemon, favorites) {
     final ja_salvo = salvos.contains(pokemon);
-    
+
     //  onPressed: () => Navigator.of(context).pushReplacement(
-                        // MaterialPageRoute(builder: (context) => const Principal()),
-                      // ),
+    // MaterialPageRoute(builder: (context) => const Principal()),
+    // ),
 
     return InkWell(
-       onTap:()=> Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) =>  Similar(pokemonId:pokemon['id'] ),)
-       ) ,
-       child:Card(
-          child: Column(
-            children: [
-                  ListTile(
-                    title: Ink(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          IconButton(
-                            icon: ja_salvo
-                                ? const Icon(Icons.star)
-                                : const Icon(Icons.star_border),
-                            color: ja_salvo ? Colors.yellow : null,
-                            onPressed: () {
-                              setState(() {
-                                if (ja_salvo) {
-                                  salvos.remove(pokemon);
-                                } else {
-                                  salvos.add(pokemon);
-                                }
-                              });
-                            },
-                            iconSize: 30,
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Text(pokemon['name']),
-                              Text("#${_dexNumber(pokemon['pokedex_number'].toString())}"),
-                            ],
-                          ),
-                        ],
-                      ),
+      onTap: () => Navigator.of(context).pushReplacement(MaterialPageRoute(
+        builder: (context) => Similar(pokemonId: pokemon['id']),
+      )),
+      child: Card(
+        child: Column(
+          children: [
+            ListTile(
+              title: Ink(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    IconButton(
+                      icon: ja_salvo
+                          ? const Icon(Icons.star)
+                          : const Icon(Icons.star_border),
+                      color: ja_salvo ? Colors.yellow : null,
+                      onPressed: () {
+                        setState(() {
+                          if (ja_salvo) {
+                            salvos.remove(pokemon);
+                            print(favorites);
+                          } else {
+                            salvos.add(pokemon);
+                          }
+                        });
+                      },
+                      iconSize: 30,
                     ),
-                  ),
-              Image.network(
-                'https://raw.githubusercontent.com/Dimitrimm/pokemonAssets/master/${pokemon["img"]}.png',
-                width: 100,
-                height: 100,
-              )
-            ],
-          ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text(pokemon['name']),
+                        Text(
+                            "#${_dexNumber(pokemon['pokedex_number'].toString())}"),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Image.network(
+              'https://raw.githubusercontent.com/Dimitrimm/pokemonAssets/master/${pokemon["img"]}.png',
+              width: 100,
+              height: 100,
+            )
+          ],
         ),
+      ),
     );
   }
 
@@ -160,8 +152,9 @@ class _PokedexgetState extends State<Pokedex> {
                   alignment: Alignment.topLeft,
                   child: IconButton(
                       onPressed: () => Navigator.of(context).pushReplacement(
-                        MaterialPageRoute(builder: (context) => const Principal()),
-                      ),
+                            MaterialPageRoute(
+                                builder: (context) => const Principal()),
+                          ),
                       icon: const Icon(
                         Icons.arrow_back_ios_outlined,
                         size: 18.0,
@@ -197,34 +190,35 @@ class _PokedexgetState extends State<Pokedex> {
                         TextStyle(fontSize: 24, fontWeight: FontWeight.bold))),
             // Expanded(child:buildListView()),
             Expanded(
-                child: FutureBuilder<List>(
-              future: fetch(),
-              builder: (context, snapshot) {
-                if (snapshot.hasError) {
+              child: FutureBuilder<List>(
+                future: request,
+                builder: (context, snapshot) {
+                  if (snapshot.hasError) {
+                    return const Center(
+                      child: Text("Erro ao carregar os pokémons"),
+                    );
+                  }
+
+                  if (snapshot.hasData) {
+                    return GridView.builder(
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                        ),
+                        itemCount: snapshot.data!.length,
+                        itemBuilder: (context, index) {
+                          final item = snapshot.data![index];
+
+                          return createCard(item, userData);
+                        });
+                  }
+
                   return const Center(
-                    child: Text("Erro ao carregar os pokémons"),
+                    child: CircularProgressIndicator(),
                   );
-                }
-
-                if (snapshot.hasData) {
-                  return GridView.builder(
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                      ),
-                      itemCount: snapshot.data!.length,
-                      itemBuilder: (context, index) {
-                        final item = snapshot.data![index];
-
-                        return createCard(item);
-                      });
-                }
-
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              },
-            ))
+                },
+              ),
+            )
           ],
         ),
       ),

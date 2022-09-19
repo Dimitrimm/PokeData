@@ -96,7 +96,7 @@ class _PokedexgetState extends State<Pokedex> {
   Widget createCard(pokemon, favorites) {
     return InkWell(
       onTap: () => Navigator.of(context).pushReplacement(MaterialPageRoute(
-        builder: (context) => PokemonInfo(),
+        builder: (context) => PokemonInfo(pokemonId: pokemon['id']),
       )),
       child: Card(
         child: Column(

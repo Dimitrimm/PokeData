@@ -97,9 +97,12 @@ class _PokedexgetState extends State<Pokedex> {
   //CARD
   Widget createCard(pokemon, favorites) {
     var favStatus;
+    var teste;
 
-    var teste = Map<dynamic, dynamic>.from(userData['favorites']);
-    // print(teste);
+    if(userData['favorites'] != null){
+      teste = Map<dynamic, dynamic>.from(userData['favorites']);
+    }
+    print(teste);
     // print(pokemon);
 
     

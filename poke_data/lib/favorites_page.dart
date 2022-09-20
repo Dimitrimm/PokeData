@@ -132,7 +132,6 @@ class _FavoriteState extends State<Favorite> {
         if (key != "idP")
           lista.add(key);
       });
-
     }
     return Expanded(
       child: ListView.builder(

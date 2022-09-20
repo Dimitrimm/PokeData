@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import './pokemonButtonMap.dart';
 import './searchBar.dart';
-import './pokemons.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -19,22 +18,55 @@ class Search extends StatefulWidget {
 class _SearchState extends State<Search> {
   String query = '';
   late List pikomons;
+  late Future<List> pokemons;
 
   @override
   void initState() {
     super.initState();
-
-    pikomons = pokemons;
+    pokemons = pokemonsApi();
+    query = '';
   }
 
-  Future<List> fetch() async {
+  Future<List> pokemonsApi() async {
     var url = Uri.parse('http://10.0.2.2:5000/allpokemons');
     var response = await http.get(url);
     if (response.statusCode == 200) {
-      return jsonDecode(utf8.decode(response.bodyBytes));
+      return jsonDecode(utf8.decode(response.bodyBytes))
+          .map((poke) => poke)
+          .toList();
     } else {
       return throw Exception("Error ao conectar-se ao servidor");
     }
+  }
+
+  buildPokemons() {
+    return FutureBuilder<List>(
+                future: pokemons,
+                builder: (context, snapshot) {
+                  if (snapshot.hasError) {
+                    return const Center(
+                      child: Text("Erro ao carregar os pokémons"),
+                    );
+                  }
+
+                  if (snapshot.hasData) {
+                    return ListView.builder(
+                        itemCount: snapshot.data!.length,
+                        itemBuilder: (context, index) {
+                          final item = snapshot.data![index];
+                          if (searchPokemonApi(item)) {
+                            return PokemonButtonMap(item);
+                          } else {
+                            return Container();
+                          }
+                        });
+                  }
+
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                },
+              );
   }
 
   @override
@@ -50,11 +82,12 @@ class _SearchState extends State<Search> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 IconButton(
-                    onPressed: () => Navigator.pop(context),
-                    icon: const Icon(
-                      Icons.arrow_back_ios_outlined,
-                      size: 18.0,
-                    )),
+                  onPressed: () => Navigator.pop(context),
+                  icon: const Icon(
+                    Icons.arrow_back_ios_outlined,
+                    size: 18.0,
+                  ),
+                ),
               ],
             ),
             buildSearch(),
@@ -62,35 +95,7 @@ class _SearchState extends State<Search> {
               height: 10,
             ),
             Expanded(
-              // child: ListView.builder(
-              //   itemCount: pikomons.length,
-              //   itemBuilder: (context, index) {
-              //     return PokemonButtonMap(pikomons[index]);
-              //   },
-              child: FutureBuilder<List>(
-                future: fetch(),
-                builder: (context, snapshot) {
-                  if (snapshot.hasError) {
-                    return const Center(
-                      child: Text("Erro ao carregar os pokémons"),
-                    );
-                  }
-
-                  if (snapshot.hasData) {
-                    return ListView.builder(
-                        itemCount: snapshot.data!.length,
-                        itemBuilder: (context, index) {
-                          final item = snapshot.data![index];
-
-                          return PokemonButtonMap(item);
-                        });
-                  }
-
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                },
-              ),
+              child: buildPokemons(),
             ),
           ],
         ),
@@ -114,20 +119,23 @@ class _SearchState extends State<Search> {
   }
 
   void searchPokemon(String query) {
-    final pikomons = pokemons.where((pokemon) {
-      final nameLower = pokemon['name'].toString().toLowerCase();
-      final typeLower = pokemon['type'].toString().toLowerCase();
-      final id = _dexNumber(pokemon['pokedexNumber'].toString());
-      final searchLower = query.toLowerCase();
+    setState(() {
+      this.query = query;
+    });
+  }
 
+  searchPokemonApi(dynamic item) {
+    final nameLower = item['name'].toString().toLowerCase();
+    final typeLower = item['type'].toString().toLowerCase();
+    final id = _dexNumber(item['pokedex_number'].toString());
+    final searchLower = query.toLowerCase();
+
+    if (query != '') {
       return nameLower.contains(searchLower) ||
           typeLower.contains(searchLower) ||
           id.contains(searchLower);
-    }).toList();
-
-    setState(() {
-      this.query = query;
-      this.pikomons = pikomons;
-    });
+    } else {
+      return true;
+    }
   }
 }

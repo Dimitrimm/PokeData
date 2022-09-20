@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:poke_data/similar.dart';
+import 'package:poke_data/pokemon_info.dart';
 
 class PokemonButtonMap extends StatelessWidget {
   final Map pikomons;
@@ -10,7 +10,7 @@ class PokemonButtonMap extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap:()=> Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) =>  Similar(pokemonId:pikomons['id'] ),)
+        MaterialPageRoute(builder: (context) =>  PokemonInfo(pokemonId:pikomons['id']),)
        ),
       child: Padding(
         padding: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 10.0),

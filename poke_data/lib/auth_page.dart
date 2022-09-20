@@ -22,7 +22,7 @@ class _AuthPageState extends State<AuthPage> {
       if(formData.isLogin){
         await AuthService().login(formData.email, formData.password);
       }else{
-        await AuthService().signup(formData.name, formData.email, formData.password);
+        await AuthService().signup(formData.name, formData.email, formData.password, formData.img);
       }
     } catch(error){
       

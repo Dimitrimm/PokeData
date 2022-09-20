@@ -125,14 +125,18 @@ class _FavoriteState extends State<Favorite> {
 
   _pokemonsListView() {
     List lista = [];
-    var teste = Map<String, dynamic>.from(userData);
-    teste.forEach((key, value) { 
-      if (key != "idP")
-        lista.add(key);
-    });
+    var teste;
+    if(userData != null){
+      teste = Map<dynamic, dynamic>.from(userData);
+      teste.forEach((key, value) { 
+        if (key != "idP")
+          lista.add(key);
+      });
+
+    }
     return Expanded(
       child: ListView.builder(
-          itemCount: userData.length - 1,
+          itemCount: lista.length,
           itemBuilder: (context, index) {
             // print(lista[index]);
             // print(userData['1'].runtimeType);

@@ -66,6 +66,12 @@ class AuthFireBaseService implements AuthService {
       "favorites": {
         "idP": ""
       },
+      "folowing":{
+        "name":""
+      },
+      "followers":{
+        "name":""
+      }
     });
 
   }

@@ -75,6 +75,8 @@ class _PokedexgetState extends State<Pokedex> {
   }
 
   salvar(pokemon, id) {
+    print(pokemon['name']);
+    print(id);
     final ref = FirebaseDatabase.instance.ref('users/${id}/favorites');
     ref.update(
       {
@@ -91,9 +93,28 @@ class _PokedexgetState extends State<Pokedex> {
       },
     );
   }
-
+  
   //CARD
   Widget createCard(pokemon, favorites) {
+    var favStatus;
+
+    var teste = Map<dynamic, dynamic>.from(userData['favorites']);
+
+    // print(teste);
+    // print(pokemon);
+
+    
+    // setState(() {
+      // _getUserData(userID);
+      // print(userData);
+      // if(userData['favorites'][pokemon['id']] != null){
+        // favStatus = true;
+      // }else{
+        // favStatus = false;
+      // }
+    // });
+
+
     return InkWell(
       onTap: () => Navigator.of(context).pushReplacement(MaterialPageRoute(
         builder: (context) => PokemonInfo(pokemonId: pokemon['id']),
@@ -104,21 +125,42 @@ class _PokedexgetState extends State<Pokedex> {
             ListTile(
               title: Ink(
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     IconButton(
-                      onPressed: (){},
-                      icon: Icon(),
+                      onPressed: () {
+                        if(userData['favorites'][pokemon['id']] == null){
+                          print("salvando pokémon");
+                          salvar(pokemon, userID);
+                          _getUserData(userID);
+                          setState(() {
+                            favStatus = true;
+                          });
+                        }else{
+                          print("Removendo pokémon");
+                          desfavoritar(pokemon, userID);
+                          _getUserData(userID);
+                          setState(() {
+                            favStatus = false;
+                          });
+                        }
+                      },
+                      icon: Icon(
+                        Icons.star_border,
+                        color: teste.containsKey(pokemon['id']) ? Colors.yellow : null ,
+                      ),
                     ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Text(pokemon['name']),
-                        Text(
-                            "#${_dexNumber(pokemon['pokedex_number'].toString())}"),
-                      ],
+                    Expanded(
+                      child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                          Text(pokemon['name'],
+                          overflow: TextOverflow.ellipsis,),
+                          Text("#${_dexNumber(pokemon['pokedex_number'].toString())}"),
+                        ],
+                      ),
                     ),
                   ],
                 ),
@@ -155,9 +197,11 @@ class _PokedexgetState extends State<Pokedex> {
             padding: const EdgeInsets.only(left: 21),
             alignment: Alignment.topLeft,
             child: IconButton(
-              onPressed: () => Navigator.of(context).pushReplacement(
-                MaterialPageRoute(builder: (context) => const Principal()),
-              ),
+              onPressed: () {
+                Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(builder: (context) => const Principal()),
+                );
+              },
               icon: const Icon(
                 Icons.arrow_back_ios_outlined,
                 size: 18.0,

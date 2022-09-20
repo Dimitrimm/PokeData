@@ -154,7 +154,7 @@ class _PrincipalState extends State<Principal> {
                     child: Column(
                       children: [
                         TextButton(
-                            onPressed: () => Navigator.push(
+                            onPressed: () => Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => Pokedex())),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import './pokemonButtonMap.dart';
-import './pokemonsPorTime.dart';
+import './pokemons.dart';
 import './search_page.dart';
 
 main() => runApp(viewTimes());
@@ -80,18 +80,13 @@ class _viewTimesState extends State<viewTimes> {
     return Card(
     child: Padding(
       padding: const EdgeInsets.only(left: 16, top: 8, right: 16, bottom: 8),
-      child: Column(  
-        children: [
-          Text(texto),
-          SizedBox(height: 8),
-          Image.asset(
-                'assets/images/valentia.png',
-                width: 120,
-                height: 120,
-              ),
-        ],
+        child: Column( 
+          children: [
+            Text(texto),
+            SizedBox(height: 8),  
+          ],
       ),
-    ),  
+    ),
   );
  }
 }

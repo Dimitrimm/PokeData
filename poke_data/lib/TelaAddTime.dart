@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import './pokemonButtonMap.dart';
-import './pokemonsPorTime.dart';
+import './pokemons.dart';
 import './search_page.dart';
 
-main() => runApp(novoTeam());
+main() => runApp(NovoTeam());
 
-class novoTeam extends StatefulWidget {
-  const novoTeam({Key? key}) : super(key: key);
+class NovoTeam extends StatefulWidget {
+  const NovoTeam({Key? key}) : super(key: key);
 
   @override
-  State<novoTeam> createState() => _novoTeamState();
+  State<NovoTeam> createState() => _NovoTeamState();
 }
 
-class _novoTeamState extends State<novoTeam> {
+class _NovoTeamState extends State<NovoTeam> {
   final time = pokemons;
 
   @override
@@ -28,11 +28,13 @@ class _novoTeamState extends State<novoTeam> {
             Row(
               children: [
                 IconButton(
-                  icon: const Icon(Icons.keyboard_arrow_left),
-                  onPressed: () {},
-                ),
+                      onPressed: goBack, icon: const Icon(Icons.arrow_back_ios_new)
+                      ),
               ],
             ),
+
+
+
             Image.asset(
               'assets/images/pokebolas.png',
               width: 110,
@@ -48,9 +50,12 @@ class _novoTeamState extends State<novoTeam> {
                   fontWeight: FontWeight.bold,
                   color: Colors.black),
             ),
+            
             const SizedBox(
               height: 32,
             ),
+            
+            
             Row(
               children: [
                 Text("Team name:"),
@@ -65,15 +70,22 @@ class _novoTeamState extends State<novoTeam> {
                 ),
               ],
             ),
+            
+            
+            
             const SizedBox(
               height: 16,
             ),
+            
+            
+            
             Row(
               children: [
                 Text("Members:"),
               ],
             ),
-             _AddPokemonTime('Add'),
+            
+            _AddPokemonTime('Add'),
             Expanded(
               child: ListView.builder(
                 itemCount: time.length,
@@ -110,17 +122,6 @@ class _novoTeamState extends State<novoTeam> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Padding(
-              padding: const EdgeInsets.fromLTRB(8.0, 0.0, 0.0, 0.0),
-              child: IconButton(
-                icon: const Icon(Icons.add),
-                onPressed: () {
-                  Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => Search()));
-                      
-                },
-              ),
-            ),
-            Padding(
               padding: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
               child: Text(
                 texto,
@@ -136,4 +137,6 @@ class _novoTeamState extends State<novoTeam> {
       ),
     );
   }
+
+  void goBack() {}
 }

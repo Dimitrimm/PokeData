@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-class PokemonButtonMap extends StatelessWidget {
+class TimeButtonMap extends StatelessWidget {
   final Map<String, String> pikomons;
 
-  const PokemonButtonMap(this.pikomons, {Key? key}) : super(key: key);
+  const TimeButtonMap(this.pikomons, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +36,7 @@ class PokemonButtonMap extends StatelessWidget {
                   Container(
                     padding: const EdgeInsets.fromLTRB(15.0, 0.0, 15.0, 0.0),
                     child: Image.asset(
-                      'assets/images/${pikomons['pokedexNumber']}.png',
+                      'assets/images/valentia.png',
                       width: 56,
                       height: 56,
                     ),
@@ -53,33 +53,14 @@ class PokemonButtonMap extends StatelessWidget {
                             color: Colors.black),
                         textAlign: TextAlign.left,
                       ),
-                      Text(pikomons['type'].toString(),
-                          style: const TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.normal,
-                              color: Colors.black),
-                          textAlign: TextAlign.left),
                     ],
                   ),
                 ],
               ),
-              Padding(
-                  padding: const EdgeInsets.fromLTRB(0.0, 0.0, 16.0, 0.0),
-                  child: Text(
-                      '#${_dexNumber(pikomons['pokedexNumber'].toString())}')),
             ],
           ),
         ),
       ),
     );
-  }
-
-  _dexNumber(String id) {
-    if (id.length == 1) {
-      id = '00$id';
-    } else if (id.length == 2) {
-      id = ('0$id');
-    }
-    return id;
   }
 }

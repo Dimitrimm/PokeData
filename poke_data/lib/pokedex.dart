@@ -99,7 +99,8 @@ class _PokedexgetState extends State<Pokedex> {
     var favStatus;
 
     var teste = Map<dynamic, dynamic>.from(userData['favorites']);
-    print(teste);
+    // print(teste);
+    // print(pokemon);
 
     
     // setState(() {

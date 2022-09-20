@@ -1,3 +1,5 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import './pokemonButtonMap.dart';
 import './pokemons.dart';
@@ -27,6 +29,38 @@ class Favorite extends StatefulWidget {
 }
 
 class _FavoriteState extends State<Favorite> {
+  var userData;
+  var userID;
+
+  
+  @override
+  void initState() {
+    // request = fetch();
+    super.initState();
+    FirebaseAuth.instance.authStateChanges().listen((User? user) {
+      if (user == null) {
+        print('User is currently signed out!');
+      } else {
+        userID = user.uid;
+        _getUserData(user.uid);
+      }
+    });
+  }
+  
+
+  _getUserData(id) async {
+    print('gfetUserData USerID' + userID);
+    final ref = FirebaseDatabase.instance.ref('users/${id}/favorites');
+    final snapshot = await ref.get();
+    if (snapshot.exists) {
+      setState(() {
+        userData = snapshot.value;
+      });
+    } else {
+      print('No data available.');
+    }
+  }
+
   final pikomons = pokemons;
 
   @override
@@ -47,6 +81,19 @@ class _FavoriteState extends State<Favorite> {
   }
 
   _favoritesLogo() {
+    // List lista = [];
+    // var teste = Map<String, dynamic>.from(userData);
+    // teste.forEach((key, value) { 
+    //   if (key != "idP")
+    //     lista.add(key);
+    // });
+    // var t = teste.toString();
+    // l = t.split(':');
+    // print(lista);
+
+    // for(var i in userData){
+    //   print(userData[i]);
+    // }
     return Stack(children: [
       SizedBox(
           width: double.infinity,
@@ -77,13 +124,21 @@ class _FavoriteState extends State<Favorite> {
   }
 
   _pokemonsListView() {
+    List lista = [];
+    var teste = Map<String, dynamic>.from(userData);
+    teste.forEach((key, value) { 
+      if (key != "idP")
+        lista.add(key);
+    });
     return Expanded(
       child: ListView.builder(
-          itemCount: pikomons.length,
+          itemCount: userData.length - 1,
           itemBuilder: (context, index) {
-            return PokemonButtonMap(pikomons[index]);
+            // print(lista[index]);
+            // print(userData['1'].runtimeType);
+            // print(pokemons[1]);
+            return PokemonButtonMap(userData[lista[index]], lista[index]);
           }),
     );
   }
-
 }

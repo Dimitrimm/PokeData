@@ -9,7 +9,7 @@ class PokemonButtonMap extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap:()=> Navigator.of(context).pushReplacement(
+      onTap:()=> Navigator.of(context).push(
         MaterialPageRoute(builder: (context) =>  PokemonInfo(pokemonId:pikomons['id']),)
        ),
       child: Padding(

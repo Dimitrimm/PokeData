@@ -387,7 +387,9 @@ class _PokemonInfoState extends State<PokemonInfo> {
     }
   }
 
-  void goBack() {}
+  void goBack() {
+    Navigator.of(context).pop();
+  }
 
   void setFavorite() {}
 }

@@ -116,7 +116,7 @@ class _PokedexgetState extends State<Pokedex> {
 
 
     return InkWell(
-      onTap: () => Navigator.of(context).pushReplacement(MaterialPageRoute(
+      onTap: () => Navigator.of(context).push(MaterialPageRoute(
         builder: (context) => PokemonInfo(pokemonId: pokemon['id']),
       )),
       child: Card(

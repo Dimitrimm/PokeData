@@ -41,66 +41,64 @@ class _SearchState extends State<Search> {
 
   buildPokemons() {
     return FutureBuilder<List>(
-                future: pokemons,
-                builder: (context, snapshot) {
-                  if (snapshot.hasError) {
-                    return const Center(
-                      child: Text("Erro ao carregar os pokémons"),
-                    );
-                  }
+      future: pokemons,
+      builder: (context, snapshot) {
+        if (snapshot.hasError) {
+          return const Center(
+            child: Text("Erro ao carregar os pokémons"),
+          );
+        }
 
-                  if (snapshot.hasData) {
-                    return ListView.builder(
-                        itemCount: snapshot.data!.length,
-                        itemBuilder: (context, index) {
-                          final item = snapshot.data![index];
-                          if (searchPokemonApi(item)) {
-                            return PokemonButtonMap(item);
-                          } else {
-                            return Container();
-                          }
-                        });
-                  }
+        if (snapshot.hasData) {
+          return ListView.builder(
+              itemCount: snapshot.data!.length,
+              itemBuilder: (context, index) {
+                final item = snapshot.data![index];
+                if (searchPokemonApi(item)) {
+                  return PokemonButtonMap(item);
+                } else {
+                  return Container();
+                }
+              });
+        }
 
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                },
-              );
+        return const Center(
+          child: CircularProgressIndicator(),
+        );
+      },
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-          body: Padding(
-        padding:
-            const EdgeInsets.only(top: 42, left: 22, right: 22, bottom: 22),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                IconButton(
-                  onPressed: () => Navigator.pop(context),
-                  icon: const Icon(
-                    Icons.arrow_back_ios_outlined,
-                    size: 18.0,
-                  ),
+        body: Padding(
+      padding: const EdgeInsets.only(top: 42, left: 22, right: 22, bottom: 22),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              IconButton(
+                onPressed: () => Navigator.pop(context),
+                icon: const Icon(
+                  Icons.arrow_back_ios_outlined,
+                  size: 18.0,
                 ),
-              ],
-            ),
-            buildSearch(),
-            const SizedBox(
-              height: 10,
-            ),
-            Expanded(
-              child: buildPokemons(),
-            ),
-          ],
-        ),
-      )
-    );
+              ),
+            ],
+          ),
+          buildSearch(),
+          const SizedBox(
+            height: 10,
+          ),
+          Expanded(
+            child: buildPokemons(),
+          ),
+        ],
+      ),
+    ));
   }
 
   Widget buildSearch() => SearchWidget(

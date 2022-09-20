@@ -71,6 +71,9 @@ class AuthFireBaseService implements AuthService {
       },
       "followers":{
         "name":""
+      },
+      "teams":{
+        "team1":""
       }
     });
 

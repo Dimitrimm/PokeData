@@ -83,7 +83,7 @@ class _SearchState extends State<Search> {
                         itemBuilder: (context, index) {
                           final item = snapshot.data![index];
 
-                          return PokemonButtonMap(item);
+                          return PokemonButtonMap(item, 1);
                         });
                   }
 

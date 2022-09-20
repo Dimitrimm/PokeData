@@ -100,6 +100,9 @@ class _FavoriteState extends State<Favorite> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
+              const SizedBox(
+                height: 60,
+              ),
               Image.asset(
                 "assets/images/estrela.png",
                 height: 100,

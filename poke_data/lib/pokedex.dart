@@ -97,12 +97,10 @@ class _PokedexgetState extends State<Pokedex> {
   //CARD
   Widget createCard(pokemon, favorites) {
     var favStatus;
-    var teste;
 
-    if(userData['favorites'] != null){
-      teste = Map<dynamic, dynamic>.from(userData['favorites']);
-    }
-    print(teste);
+    var teste = Map<dynamic, dynamic>.from(userData['favorites']);
+
+    // print(teste);
     // print(pokemon);
 
     
@@ -153,14 +151,16 @@ class _PokedexgetState extends State<Pokedex> {
                         color: teste.containsKey(pokemon['id']) ? Colors.yellow : null ,
                       ),
                     ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Text(pokemon['name']),
-                        Text(
-                            "#${_dexNumber(pokemon['pokedex_number'].toString())}"),
-                      ],
+                    Expanded(
+                      child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                          Text(pokemon['name'],
+                          overflow: TextOverflow.ellipsis,),
+                          Text("#${_dexNumber(pokemon['pokedex_number'].toString())}"),
+                        ],
+                      ),
                     ),
                   ],
                 ),

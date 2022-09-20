@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:poke_data/TimesFinal.dart';
 import 'package:poke_data/config_page.dart';
 import 'package:poke_data/favorites_page.dart';
 import 'package:poke_data/pokedex.dart';
@@ -157,7 +158,7 @@ class _PrincipalState extends State<Principal> {
                             onPressed: () => Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => Pokedex())),
+                                    builder: (context) => ViewTimes())),
                             child: Container(
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(8.0),

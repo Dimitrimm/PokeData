@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import './pokemonButtonMap.dart';
+import './favButtonMap.dart';
 import './pokemons.dart';
 
 main() => runApp(const FavoritesPage());
@@ -143,7 +143,7 @@ class _FavoriteState extends State<Favorite> {
             // print(lista[index]);
             // print(userData['1'].runtimeType);
             // print(pokemons[1]);
-            return PokemonButtonMap(userData[lista[index]], lista[index]);
+            return FavButtonMap(userData[lista[index]], lista[index]);
           }),
     );
   }

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import './TimeButtonMap.dart';
+import 'package:poke_data/pokemonButtonMap.dart';
 import './pokemons.dart';
-import './search_page.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 main() => runApp(NovoTeam());
 
@@ -14,6 +15,16 @@ class NovoTeam extends StatefulWidget {
 
 class _NovoTeamState extends State<NovoTeam> {
   final time = pokemons;
+
+  Future<List> fetch() async {
+    var url = Uri.parse('http://10.0.2.2:5000/allpokemons');
+    var response = await http.get(url);
+    if (response.statusCode == 200) {
+      return jsonDecode(utf8.decode(response.bodyBytes));
+    } else {
+      return throw Exception("Error ao conectar-se ao servidor");
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -89,7 +100,7 @@ class _NovoTeamState extends State<NovoTeam> {
               child: ListView.builder(
                 itemCount: time.length,
                 itemBuilder: (context, index) {
-                  return TimeButtonMap(time[index]);
+                  return PokemonButtonMap(time[index]);
                 },
               ),
             )
@@ -136,6 +147,4 @@ class _NovoTeamState extends State<NovoTeam> {
       ),
     );
   }
-
-  void goBack() {}
 }

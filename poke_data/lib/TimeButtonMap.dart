@@ -9,7 +9,7 @@ class TimeButtonMap extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        // colocar o path da tela pokeInfo
+        print('oi');
       },
       child: Padding(
         padding: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 10.0),

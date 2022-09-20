@@ -68,7 +68,7 @@ class _ViewTimesState extends State<ViewTimes> {
                 children: [
                   Padding(
                     padding: const EdgeInsets.only(left: 12),
-                    child: Text("Seus times:"),
+                    child: Text("Seus times:", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),),
                   ),
                 ],
               ),
@@ -93,7 +93,7 @@ class _ViewTimesState extends State<ViewTimes> {
         child: Container(
           width: 200, 
           height: 200, 
-          child: RaisedButton(
+          child: ElevatedButton(
             child: Padding(
               padding: const EdgeInsets.only(left: 16, top: 8, right: 16, bottom: 8),
                 child: Column(  

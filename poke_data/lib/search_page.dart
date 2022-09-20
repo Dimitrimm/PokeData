@@ -39,8 +39,7 @@ class _SearchState extends State<Search> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
+    return Scaffold(
           body: Padding(
         padding:
             const EdgeInsets.only(top: 42, left: 22, right: 22, bottom: 22),
@@ -83,7 +82,7 @@ class _SearchState extends State<Search> {
                         itemBuilder: (context, index) {
                           final item = snapshot.data![index];
 
-                          return PokemonButtonMap(item, 1);
+                          return PokemonButtonMap(item);
                         });
                   }
 
@@ -95,7 +94,7 @@ class _SearchState extends State<Search> {
             ),
           ],
         ),
-      )),
+      )
     );
   }
 

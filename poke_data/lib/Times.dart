@@ -17,8 +17,7 @@ class _viewTimesState extends State<viewTimes> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
+    return Scaffold(
           body: Padding(
         padding:
             const EdgeInsets.only(top: 42, left: 22, right: 22, bottom: 22),
@@ -72,7 +71,7 @@ class _viewTimesState extends State<viewTimes> {
             )
           ],
         ),
-      )),
+      )
     );
   }
 

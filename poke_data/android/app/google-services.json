@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "955153149587",
+    "firebase_url": "https://pokedata-3d0b6-default-rtdb.firebaseio.com",
+    "project_id": "pokedata-3d0b6",
+    "storage_bucket": "pokedata-3d0b6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:955153149587:android:5f33256002130b5454e766",
+        "android_client_info": {
+          "package_name": "com.example.poke_data"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "955153149587-n9nqbcssf36vtm0ebpdis6rfupc5kl7b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAYqIZhgkATWKUblvDvyd6AqBsfkl0d8Eo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "955153149587-n9nqbcssf36vtm0ebpdis6rfupc5kl7b.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "955153149587-tjj9k0v7hkuaelo7kqdvdo1pf9135hoj.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.pokeData"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

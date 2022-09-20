@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:poke_data/auth_firebase_services.dart';
+import 'package:poke_data/auth_services.dart';
+import 'package:poke_data/login.dart';
 import './search_page.dart';
 
 main() => runApp(const Config());
@@ -13,8 +16,8 @@ class Config extends StatefulWidget {
 class _ConfigState extends State<Config> {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
+    return 
+      Scaffold(
         body: Padding(
           padding:
               const EdgeInsets.only(top: 42, left: 22, right: 22, bottom: 22),
@@ -25,7 +28,7 @@ class _ConfigState extends State<Config> {
                 children: [
                   IconButton(
                     icon: const Icon(Icons.keyboard_arrow_left),
-                    onPressed: () {},
+                    onPressed: () => Navigator.pop(context),
                   ),
                 ],
               ),
@@ -54,7 +57,8 @@ class _ConfigState extends State<Config> {
                     Button('Alterar email', Search()),
                     Button('Alterar senha', Search()),
                     ButtonT('Versão', '4.3.3'),
-                    Button('Logout', Search()),
+                    // Button('Logout', Login(onSubmit: (_){},)),
+                    ElevatedButton(onPressed: () => AuthService().logout(), child: Text('Logout')),
                   ],
                 ),
               )
@@ -70,8 +74,7 @@ class _ConfigState extends State<Config> {
             ],
           ),
         ),
-      ),
-    );
+      );
   }
 }
 

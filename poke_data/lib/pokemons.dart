@@ -10,7 +10,7 @@ var pokemons = [
     'pokedexNumber': '6',
   },
   {
-    'name': 'Bubassalro',
+    'name': 'Bulbassauro',
     'type': 'Terra',
     'pokedexNumber': '1',
   },

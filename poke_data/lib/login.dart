@@ -1,70 +1,60 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
+import 'package:poke_data/auth_page.dart';
+import 'package:poke_data/auth_services.dart';
 import 'package:poke_data/cadastro.dart';
-import 'package:poke_data/principal.dart';
+import 'package:poke_data/form_data.dart';
+import 'package:poke_data/main.dart';
 
 void main() {
-  runApp(const Login());
+  runApp(AuthPage());
 }
 
 class Login extends StatefulWidget {
-  const Login({Key? key}) : super(key: key);
+  final void Function(FormData) onSubmit;
+
+  const Login({
+    Key? key,
+    required this.onSubmit,
+  }) : super(key: key);
 
   @override
   State<Login> createState() => _MyAppState();
 }
 
 class _MyAppState extends State<Login> {
+  String perfil = 'nenhum';
+  final _formKey = GlobalKey<FormState>();
+  final _formData = FormData();
 
-  body() {
-    return Padding(
-      padding: const EdgeInsets.only(
-        top: 40,
-        left: 40,
-        right: 40,
-      ),
-      child: ListView(
+  void _submit() {
+    final isValid = _formKey.currentState?.validate() ?? false;
+    if (!isValid) return;
+
+    widget.onSubmit(_formData);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: ListView(
         children: [
-          Center(
-            child: Text("PokeData", style: TextStyle(fontSize: 32)),
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          SizedBox(
-            width: 154,
-            height: 154,
-            child: Image.asset('images/pokebola.png'),
-          ),
-          const SizedBox(height: 30),
-          TextFormField(
-            autofocus: true,
-            keyboardType: TextInputType.emailAddress,
-            decoration: const InputDecoration(
-                labelText: "Email/Usuario",
-                labelStyle: TextStyle(
-                  color: Colors.black38,
-                  fontWeight: FontWeight.w400,
-                  fontSize: 16,
-                )),
-            style: const TextStyle(fontSize: 16),
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          TextFormField(
-            autofocus: true,
-            keyboardType: TextInputType.text,
-            decoration: const InputDecoration(
-                labelText: "Senha",
-                labelStyle: TextStyle(
-                  color: Colors.black38,
-                  fontWeight: FontWeight.w400,
-                  fontSize: 16,
-                )),
-            style: const TextStyle(fontSize: 16),
-          ),
-          const SizedBox(height: 30),
+          SizedBox(height: 10),
+          body(),
           Column(children: [
+            if (_formData.isSignup)
+              Padding(
+                padding: const EdgeInsets.only(
+                  left: 40,
+                  right: 40,
+                ),
+                child: Text(
+                  'Choose your avatar:',
+                  style: TextStyle(fontSize: 16),
+                ),
+              ),
+            if (_formData.isSignup) avatar(),
             Container(
               height: 40,
               width: 100,
@@ -72,15 +62,16 @@ class _MyAppState extends State<Login> {
               decoration: const BoxDecoration(
                 color: Colors.red,
                 borderRadius: BorderRadius.all(
-                  Radius.circular(10),
+                  Radius.circular(20),
                 ),
               ),
               child: SizedBox.expand(
                 child: TextButton(
-                  onPressed: (() => Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => Cadastro()))),
-                  child: const Text(
-                    'Sign in',
+                  onPressed: (() {
+                    _submit();
+                  }),
+                  child: Text(
+                    _formData.isLogin ? 'Sign in' : 'Sign up',
                     style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
@@ -99,14 +90,19 @@ class _MyAppState extends State<Login> {
               height: 40,
               decoration: const BoxDecoration(
                   color: Colors.red,
-                  borderRadius: BorderRadius.all(Radius.circular(10))),
+                  borderRadius: BorderRadius.all(Radius.circular(20))),
               alignment: Alignment.center,
               child: SizedBox.expand(
                 child: TextButton(
-                    onPressed: (() => Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => Main()))),
+                    onPressed: (() => setState(() {
+                          _formData.toggleMode();
+                        })),
+                    // Navigator.push(
+                    //     context,
+                    //     MaterialPageRoute(
+                    //         builder: (context) => Cadastro()))),
                     child: Text(
-                      'Sign up',
+                      _formData.isLogin ? 'Sign up' : 'Login page',
                       style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
@@ -120,15 +116,164 @@ class _MyAppState extends State<Login> {
     );
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Loading',
-      home: Builder(
-        builder: (context) => Scaffold(
-          body: body()
-        ),
+  avatar() {
+    homem() {
+      perfil = 'h';
+      _formData.img = perfil;
+      setState(() {});
+    }
+    mulher() {
+      perfil = 'm';
+      _formData.img = perfil;
+      setState(() {});
+    }
+    bordah(){
+      if (perfil == 'h'){
+        return BoxDecoration(
+              border: Border.all(color: Colors.blueAccent));
+      }
+    }
+    bordam(){
+      if (perfil == 'm'){
+        return BoxDecoration(
+              border: Border.all(color: Colors.blueAccent));
+      }
+    }
+
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        TextButton(
+            onPressed: () => homem(),
+            child: Container(
+                decoration: bordah(),
+                width: 80, 
+                child: Image.asset('assets/images/jogador.png'))),
+        TextButton(
+            onPressed: () => mulher(),
+            child: Container(
+                decoration: bordam(),
+                width: 80, 
+                child: Image.asset('assets/images/jogadora.png')))
+      ],
+    );
+  }
+
+  user_emailField() {
+    return Padding(
+      padding: const EdgeInsets.only(
+        left: 40,
+        right: 40,
       ),
+      child: TextFormField(
+        key: ValueKey('user/email'),
+        onChanged: (email) => _formData.email = email,
+        autofocus: true,
+        keyboardType: TextInputType.emailAddress,
+        decoration: InputDecoration(
+            labelText: _formData.isLogin ? "User/Email" : "Email",
+            labelStyle: TextStyle(
+              color: Colors.black38,
+              fontWeight: FontWeight.w400,
+              fontSize: 16,
+            )),
+        validator: (_email) {
+          final email = _email ?? '';
+          if (!email.contains('@')) {
+            return 'This is not a valid email address';
+          }
+          return null;
+        },
+        style: const TextStyle(fontSize: 16),
+      ),
+    );
+  }
+
+  passwordField() {
+    return Padding(
+      padding: const EdgeInsets.only(
+        left: 40,
+        right: 40,
+      ),
+      child: TextFormField(
+        onChanged: (pass) => _formData.password = pass,
+        key: ValueKey('password'),
+        obscureText: true,
+        autofocus: true,
+        initialValue: _formData.password,
+        decoration: const InputDecoration(
+            labelText: "Password",
+            labelStyle: TextStyle(
+              color: Colors.black38,
+              fontWeight: FontWeight.w400,
+              fontSize: 16,
+            )),
+        validator: (_password) {
+          final password = _password ?? '';
+          if (password.length < 6) {
+            return 'Pasword must be at least 6 characters long';
+          }
+          return null;
+        },
+        style: const TextStyle(fontSize: 16),
+      ),
+    );
+  }
+
+  userField() {
+    return Padding(
+      padding: const EdgeInsets.only(
+        left: 40,
+        right: 40,
+      ),
+      child: TextFormField(
+        onChanged: (user) => _formData.name = user,
+        key: ValueKey('user'),
+        autofocus: true,
+        keyboardType: TextInputType.emailAddress,
+        decoration: const InputDecoration(
+            labelText: "User",
+            labelStyle: TextStyle(
+              color: Colors.black38,
+              fontWeight: FontWeight.w400,
+              fontSize: 16,
+            )),
+        style: const TextStyle(fontSize: 16),
+      ),
+    );
+  }
+
+  body() {
+    return Column(
+      children: [
+        Center(
+          child: Text("PokeData", style: TextStyle(fontSize: 32)),
+        ),
+        const SizedBox(
+          height: 10,
+        ),
+        SizedBox(
+          width: 154,
+          height: 154,
+          child: Image.asset('assets/images/pokebola.png'),
+        ),
+        const SizedBox(height: 10),
+        Form(
+          key: _formKey,
+          child: Column(
+            children: [
+              if (_formData.isSignup) userField(),
+              SizedBox(height: 10),
+              user_emailField(),
+              SizedBox(
+                height: 10,
+              ),
+              passwordField(),
+              const SizedBox(height: 30),
+            ],
+          ),
+        )
+      ],
     );
   }
 }

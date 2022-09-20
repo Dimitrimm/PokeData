@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:poke_data/similar.dart';
 
-class PokemonButtonMap extends StatelessWidget {
-  final Map pikomons;
+class PokemonButtonMapSimilar extends StatelessWidget {
+  final Map<String, dynamic>pikomons;
 
-  const PokemonButtonMap(this.pikomons, {Key? key}) : super(key: key);
+  const PokemonButtonMapSimilar(this.pikomons, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap:()=> Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) =>  Similar(pokemonId:pikomons['id'] ),)
-       ),
+      onTap: () {
+        // colocar o path da tela pokeInfo
+      },
       child: Padding(
         padding: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 10.0),
         child: Container(
@@ -36,11 +35,11 @@ class PokemonButtonMap extends StatelessWidget {
                 children: [
                   Container(
                     padding: const EdgeInsets.fromLTRB(15.0, 0.0, 15.0, 0.0),
-                    child: Image.network(
-                      'https://raw.githubusercontent.com/Dimitrimm/pokemonAssets/master/${pikomons["img"]}.png',
-                      width: 56,
-                      height: 56,
-                    ),
+                    child:Image.network(
+                          'https://raw.githubusercontent.com/Dimitrimm/pokemonAssets/master/${pikomons["img"]}.png',
+                          width: 100,
+                          height: 100,
+                      ),
                   ),
                   Column(
                     mainAxisAlignment: MainAxisAlignment.center,

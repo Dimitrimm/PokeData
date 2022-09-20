@@ -29,7 +29,7 @@ class _ViewTimesState extends State<ViewTimes> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     IconButton(
-                      onPressed: goBack, icon: const Icon(Icons.arrow_back_ios_new)
+                      onPressed: () => Navigator.pop(context), icon: const Icon(Icons.arrow_back_ios_new)
                       ),
                     IconButton(
                       onPressed: (() => Navigator.push(

@@ -27,7 +27,7 @@ class _NovoTeamState extends State<NovoTeam> {
             Row(
               children: [
                 IconButton(
-                      onPressed: goBack, icon: const Icon(Icons.arrow_back_ios_new)
+                      onPressed: () => Navigator.pop(context), icon: const Icon(Icons.arrow_back_ios_new)
                       ),
               ],
             ),

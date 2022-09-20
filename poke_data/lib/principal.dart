@@ -155,7 +155,7 @@ class _PrincipalState extends State<Principal> {
                     child: Column(
                       children: [
                         TextButton(
-                            onPressed: () => Navigator.pushReplacement(
+                            onPressed: () => Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => ViewTimes())),

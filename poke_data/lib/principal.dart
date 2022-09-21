@@ -150,45 +150,7 @@ class _PrincipalState extends State<Principal> {
                   const SizedBox(
                     width: 15,
                   ),
-                  SizedBox(
-                    width: 120,
-                    child: Column(
-                      children: [
-                        TextButton(
-                            onPressed: () => Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => ViewTimes())),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(8.0),
-                                color: Colors.white,
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.grey.withOpacity(0.5),
-                                    spreadRadius: 2,
-                                    blurRadius: 10,
-                                    offset: Offset(0, 3),
-                                  ),
-                                ],
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.all(15.0),
-                                child:
-                                    Image.asset('assets/images/pokebolas.png'),
-                              ),
-                            )),
-                        const SizedBox(
-                          child: Text('Teams'),
-                        )
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 10),
-              Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                SizedBox(
+                   SizedBox(
                   width: 120,
                   child: Column(
                     children: [
@@ -221,43 +183,10 @@ class _PrincipalState extends State<Principal> {
                     ],
                   ),
                 ),
-                const SizedBox(
-                  width: 15,
-                ),
-                SizedBox(
-                  width: 120,
-                  child: Column(
-                    children: [
-                      TextButton(
-                          onPressed: (() => Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const SocialPage()))),
-                          child: Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(8.0),
-                              color: Colors.white,
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey.withOpacity(0.5),
-                                  spreadRadius: 2,
-                                  blurRadius: 10,
-                                  offset: Offset(0, 3),
-                                ),
-                              ],
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(15.0),
-                              child: Image.asset('assets/images/insignia.png'),
-                            ),
-                          )),
-                      const SizedBox(
-                        child: Text('Social'),
-                      )
-                    ],
-                  ),
-                ),
-              ]),
+                  
+                ],
+              ),
+              const SizedBox(height: 10),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [

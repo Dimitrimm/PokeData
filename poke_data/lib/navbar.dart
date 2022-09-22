@@ -19,7 +19,7 @@ class _NavbarState extends State<Navbar> {
   final List<Widget> telas = [
     Search(),
     const Principal(),
-    const VersusPage()
+    VersusPage()
   ];
   
   @override

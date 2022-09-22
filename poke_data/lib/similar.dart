@@ -122,7 +122,7 @@ class _SimilarState extends State<Similar> {
                 alignment: Alignment.topLeft,
                 child: BackButton(
                   color: Colors.black,
-                  onPressed: (){print('teste');},
+                  onPressed: () => Navigator.pop(context),
                 ),
               ),
               _similarLogo(),

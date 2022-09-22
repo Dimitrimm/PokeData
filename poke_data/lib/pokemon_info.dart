@@ -4,6 +4,7 @@ import 'dart:ffi';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:http/http.dart' as http;
+import 'package:poke_data/similar.dart';
 
 class PokemonInfo extends StatefulWidget {
   String pokemonId;
@@ -292,6 +293,7 @@ class _PokemonInfoState extends State<PokemonInfo> {
   }
 
   Widget _clusterFeature(clusterList) {
+    String pokemonId = allInfoMap['id'];
     List<Widget> pokAvatar = <Widget>[];
     for (Map<String, dynamic> pok in allClusterList.sublist(0, 15)) {
       pokAvatar.add(Container(
@@ -307,7 +309,10 @@ class _PokemonInfoState extends State<PokemonInfo> {
           )));
     }
     pokAvatar.add(IconButton(
-        onPressed: () => goBack(),
+        onPressed: (() => Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => Similar(pokemonId: pokemonId,)))),
         icon: const Icon(Icons.arrow_forward_ios_rounded)));
     return SingleChildScrollView(
         scrollDirection: Axis.horizontal,

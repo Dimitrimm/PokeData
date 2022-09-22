@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:poke_data/auth_tela_app.dart';
 
-void main(){;
-  runApp(MyApp());
+void main(){
+  runApp(const MyApp());
 }
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       home: AuthOrAppPage(),
     );
   }

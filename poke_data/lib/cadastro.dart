@@ -42,20 +42,20 @@ class _CadastroState extends State<Cadastro> {
                 child: Image.asset('assets/images/pokebola.png'),
               ),
               const SizedBox(height: 20),
-              Center(child: Text('Register', style: TextStyle(fontSize: 24))),
+              const Center(child: Text('Register', style: TextStyle(fontSize: 24))),
               const SizedBox(height: 5),
               userField(),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               emailField(),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               passwordField(),
               const SizedBox(height: 30),
-              Padding(
-                padding: const EdgeInsets.only(
+              const Padding(
+                padding: EdgeInsets.only(
                   left: 40,
                   right: 40,
                 ),
@@ -79,7 +79,7 @@ class _CadastroState extends State<Cadastro> {
                           child: Image.asset('assets/images/jogadora.png')))
                 ],
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               Column(
                 children: [
                   Container(
@@ -96,7 +96,7 @@ class _CadastroState extends State<Cadastro> {
                       child: TextButton(
                         onPressed: (() => Navigator.push(context,
                             MaterialPageRoute(builder: (context) => Login(onSubmit: (_){},)))),
-                        child: Text(
+                        child: const Text(
                           'Sign up',
                           style: TextStyle(
                               fontSize: 16,
@@ -120,7 +120,7 @@ class _CadastroState extends State<Cadastro> {
       child: ListView(children: [
         Stack(
           children: [
-            Center(
+            const Center(
               child: Text("PokeData", style: TextStyle(fontSize: 32)),
             ),
             IconButton(
@@ -140,7 +140,7 @@ class _CadastroState extends State<Cadastro> {
           child: Image.asset('assets/images/pokebola.png'),
         ),
         const SizedBox(height: 20),
-        Center(child: Text('Register', style: TextStyle(fontSize: 24))),
+        const Center(child: Text('Register', style: TextStyle(fontSize: 24))),
         const SizedBox(height: 5),
       ]),
     );

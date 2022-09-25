@@ -1,20 +1,11 @@
 import 'dart:convert';
-import 'dart:io';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:poke_data/pokemon_info.dart';
 import 'package:poke_data/principal.dart';
 import 'package:poke_data/search_page.dart';
-import 'package:poke_data/similar.dart';
 import 'package:http/http.dart' as http;
-import 'package:poke_data/principal.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
-void main() {
-  runApp(const MaterialApp(
-    home: Pokedex(),
-  ));
-}
 
 class Pokedex extends StatefulWidget {
   const Pokedex({Key? key}) : super(key: key);
@@ -93,7 +84,7 @@ class _PokedexgetState extends State<Pokedex> {
       },
     );
   }
-  
+
   //CARD
   Widget createCard(pokemon, favorites) {
     var favStatus;
@@ -103,17 +94,15 @@ class _PokedexgetState extends State<Pokedex> {
     // print(teste);
     // print(pokemon);
 
-    
     // setState(() {
-      // _getUserData(userID);
-      // print(userData);
-      // if(userData['favorites'][pokemon['id']] != null){
-        // favStatus = true;
-      // }else{
-        // favStatus = false;
-      // }
+    // _getUserData(userID);
+    // print(userData);
+    // if(userData['favorites'][pokemon['id']] != null){
+    // favStatus = true;
+    // }else{
+    // favStatus = false;
+    // }
     // });
-
 
     return InkWell(
       onTap: () => Navigator.of(context).push(MaterialPageRoute(
@@ -130,14 +119,14 @@ class _PokedexgetState extends State<Pokedex> {
                   children: [
                     IconButton(
                       onPressed: () {
-                        if(userData['favorites'][pokemon['id']] == null){
+                        if (userData['favorites'][pokemon['id']] == null) {
                           print("salvando pokémon");
                           salvar(pokemon, userID);
                           _getUserData(userID);
                           setState(() {
                             favStatus = true;
                           });
-                        }else{
+                        } else {
                           print("Removendo pokémon");
                           desfavoritar(pokemon, userID);
                           _getUserData(userID);
@@ -148,17 +137,22 @@ class _PokedexgetState extends State<Pokedex> {
                       },
                       icon: Icon(
                         Icons.star_border,
-                        color: teste.containsKey(pokemon['id']) ? Colors.yellow : null ,
+                        color: teste.containsKey(pokemon['id'])
+                            ? Colors.yellow
+                            : null,
                       ),
                     ),
                     Expanded(
                       child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                          Text(pokemon['name'],
-                          overflow: TextOverflow.ellipsis,),
-                          Text("#${_dexNumber(pokemon['pokedex_number'].toString())}"),
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Text(
+                            pokemon['name'],
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          Text(
+                              "#${_dexNumber(pokemon['pokedex_number'].toString())}"),
                         ],
                       ),
                     ),
@@ -249,7 +243,7 @@ class _PokedexgetState extends State<Pokedex> {
   Widget _futureBuilder() {
     return Expanded(
       child: FutureBuilder<List>(
-        future: request,
+        future: fetch(),
         builder: (context, snapshot) {
           if (snapshot.hasError) {
             return const Center(

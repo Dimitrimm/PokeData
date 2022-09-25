@@ -56,9 +56,8 @@ class _PokemonInfoState extends State<PokemonInfo> {
     String weight = allInfoMap['weight'] + " " + "KG";
     String color = allInfoMap['primary_color'];
     String height = allInfoMap['height'] + 'M';
-    List<String> types = allInfoMap['typing'].toString().split('~');
-    List<String> abilities = allInfoMap['abilities'].toString().split('~');
-
+    Map<String, dynamic> types = allInfoMap['typing'];
+    Map<String, dynamic> abilities = allInfoMap['abilities'];
     String hp = allInfoMap['hp'];
     String atk = allInfoMap['attack'];
     String def = allInfoMap['defense'];
@@ -157,9 +156,10 @@ class _PokemonInfoState extends State<PokemonInfo> {
     );
   }
 
-  Widget _typeRow(List<String> types) {
+  Widget _typeRow(Map<String, dynamic> types) {
     List<Widget> typeCards = <Widget>[];
-    for (String type in types) {
+    for (String typekey in types.keys) {
+      String type = types[typekey]!;
       typeCards.add(Card(
           elevation: 3,
           color: Colors.grey[300],
@@ -220,14 +220,15 @@ class _PokemonInfoState extends State<PokemonInfo> {
         ));
   }
 
-  Widget _abilitiesRow(List<String> abilities) {
+  Widget _abilitiesRow(Map<String, dynamic> abilities) {
     List<Widget> abilitiesCards = <Widget>[];
-    for (String abilite in abilities) {
+    for (String abiliteKey in abilities.keys) {
+      String abilitie = abilities[abiliteKey]!;
       abilitiesCards.add(Card(
           color: Colors.grey[300],
           child: Padding(
             padding: const EdgeInsets.all(10),
-            child: Text(abilite),
+            child: Text(abilitie),
           )));
     }
     return Row(
@@ -310,9 +311,11 @@ class _PokemonInfoState extends State<PokemonInfo> {
     }
     pokAvatar.add(IconButton(
         onPressed: (() => Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => Similar(pokemonId: pokemonId,)))),
+            context,
+            MaterialPageRoute(
+                builder: (context) => Similar(
+                      pokemonId: pokemonId,
+                    )))),
         icon: const Icon(Icons.arrow_forward_ios_rounded)));
     return SingleChildScrollView(
         scrollDirection: Axis.horizontal,
@@ -324,7 +327,7 @@ class _PokemonInfoState extends State<PokemonInfo> {
   Future<Map> fetchAllPokemonInfo(id) async {
     var response = await http.get(Uri.parse(host + endAllPokemonInfo + id));
     if (response.statusCode == 200) {
-      return jsonDecode(response.body)[0];
+      return jsonDecode(response.body);
     } else {
       throw Exception("Error ao conectar-se ao servidor");
     }
